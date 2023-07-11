@@ -109,7 +109,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         營地資訊
                     </a>
@@ -216,6 +216,27 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         共 <?= $totalCamp ?> 個營地, 第 <?= $page ?> 頁
                     </div>
                 </div>
+                <div class="py-2">
+                    <div class="mx-1 py-2 d-flex justify-content-between">
+                        <form action="search.php">
+                            <div class="row gx-2">
+                                <div class="col">
+                                    <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-primary" type="submit">搜尋</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="btn-group">
+                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=1">id <i class="fa-solid fa-arrow-up"></i></a>
+                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=2">id <i class="fa-solid fa-arrow-down"></i></a>
+                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=3">海拔 <i class="fa-solid fa-arrow-up"></i></a>
+                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=4">海拔 <i class="fa-solid fa-arrow-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -243,7 +264,15 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                            <li class="page-item <?php if ($i == $page) echo "active";?>">
+                                <a class="page-link " href="camp_info.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
             </div>
         </div>
 
