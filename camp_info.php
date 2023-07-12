@@ -35,11 +35,12 @@ if ($type == 1) {
 }
 
 $sql =
-    "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude
-  FROM camp_info
-  $orderBy 
-  LIMIT $startItem, $perPage
- ";
+"SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude
+ FROM camp_info
+ WHERE valid = 1
+ $orderBy 
+ LIMIT $startItem, $perPage
+";
 
 $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -191,7 +192,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <div class="px-3">
             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                 <h1>營地資訊</h1>
-                <div>
+                <!-- <div>
                     <div class="btn-group btn-group-sm" role="group" aria-label="">
                         <button class="btn btn-outline-secondary">Share</button>
                         <button class="btn btn-outline-secondary">Export</button>
@@ -202,7 +203,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             This Week
                         </button>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="chart">
 
@@ -257,8 +258,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 <td><?= $row["camp_phone"] ?></td>
                                 <td><?= $row["camp_altitude"] ?> 公尺</td>
                                 <td>
-                                    <a class="btn btn-primary">顯示</a>
-                                    <!-- href="user.php?id=<?= $row["id"] ?>" -->
+                                    <a class="btn btn-primary" href="camp.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
+                                    
                                 </td>
                             </tr>
                         <?php endforeach; ?>

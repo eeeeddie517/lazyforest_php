@@ -72,8 +72,9 @@ if (isset($_GET["camp_name"])) {
                             <td><?= $row["camp_phone"] ?></td>
                             <td><?= $row["camp_altitude"] ?> 公尺</td>
                             <td>
-                                <a class="btn btn-primary">顯示</a>
-                                <!-- href="user.php?id=<?= $row["id"] ?>" -->
+                                <!-- <a class="btn btn-primary">顯示</a>
+                                href="user.php?id=<?= $row["id"] ?>" -->
+                                <a class="btn btn-primary" href="camp.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
