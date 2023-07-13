@@ -29,10 +29,10 @@ if (isset($_GET["camp_name"])) {
 <body>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-primary" href="camp_info.php">回營地列表</a>
+            <a class="btn btn-primary" href="camp_info-LIN.php">回營地列表</a>
         </div>
         <div class="py-2">
-            <form action="search.php">
+            <form action="search-LIN.php">
                 <div class="row gx-2">
                     <div class="col">
                         <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
@@ -74,7 +74,7 @@ if (isset($_GET["camp_name"])) {
                             <td>
                                 <!-- <a class="btn btn-primary">顯示</a>
                                 href="user.php?id=<?= $row["id"] ?>" -->
-                                <a class="btn btn-primary" href="camp.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
+                                <a class="btn btn-primary" href="camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

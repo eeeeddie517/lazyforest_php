@@ -15,7 +15,7 @@ $sql="UPDATE camp_info SET camp_name='$camp_name', camp_address='$camp_address',
 // echo $sql;
 
 if ($conn->query($sql) === TRUE) {
-    header("location: camp.php?camp_id=".$camp_id);
+    header("location: camp.php-LIN?camp_id=".$camp_id);
 } else {
     echo "修改資料錯誤: " . $conn->error;
 }

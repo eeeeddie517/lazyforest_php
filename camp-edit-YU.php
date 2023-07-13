@@ -5,7 +5,7 @@ if (!isset($_GET["id"])) {
 }
 $id = $_GET["id"];
 
-require_once("../db_connect_camp.php");
+require_once("../db_connect.php");
 $sql = "SELECT * FROM camps WHERE id=$id";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -40,7 +40,7 @@ $row = $result->fetch_assoc();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <a href="doDelete.php?id=<?= $id ?>" class="btn btn-danger">確認</a>
+                    <a href="doDelete-YU.php?id=<?= $id ?>" class="btn btn-danger">確認</a>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@ $row = $result->fetch_assoc();
             <div class="py-2 d-flex justify-content-between">
                 <div>
                     <button class="btn btn-info" type="submit">儲存</button>
-                    <a class="btn btn-info" href="camp.php?id=<?= $row["id"] ?>">取消</a>
+                    <a class="btn btn-info" href="camp-YU.php?id=<?= $row["id"] ?>">取消</a>
                 </div>
                 <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
             </div>

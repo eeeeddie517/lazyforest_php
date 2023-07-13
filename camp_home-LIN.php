@@ -4,7 +4,7 @@ require_once("../db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
-    header("location: sign-in.php");
+    header("location: ../admin/sign-in.php");
 }
 
 $page = $_GET["page"] ?? 1;
@@ -49,7 +49,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-    <title>DashBoard</title>
+    <title>森懶腰</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -104,74 +104,25 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <nav class="">
             <ul class="list-unstyled">
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                         Dashboard
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         營地資訊
                     </a>
                 </li>
-                <!-- <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-cart-shopping fa-fw me-2"></i>
-                        Products
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營位預定
                     </a>
                 </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-user-group fa-fw me-2"></i>
-                        Customers
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-chart-line fa-fw me-2"></i>
-                        Reports
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-puzzle-piece fa-fw me-2"></i>
-                        Integrations
-                    </a>
-                </li> -->
             </ul>
-            <!-- flex between 分兩邊 -->
-            <!-- <div class="mt-3 d-flex justify-content-between text-secondary px-3 mb-2">
-                <div>SAVED REPORTS</div>
-                <a role="button">
-                    <i class="fa-regular fa-square-plus"></i>
-                </a>
-            </div> -->
             <ul class="list-unstyled">
-                <!-- <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-file-lines fa-fw me-2"></i>
-                        Current month
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-file-lines fa-fw me-2"></i>
-                        Last quarter
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-file-lines fa-fw me-2"></i>
-                        Social engagement
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="">
-                        <i class="fa-solid fa-file-lines fa-fw me-2"></i>
-                        Year-end sale
-                    </a>
-                </li> -->
                 <hr>
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="">
@@ -189,27 +140,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
     </aside>
     <main class="main-content ">
-        <div class="px-3">
+        <!-- <div class="px-3">
             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                 <h1>營地資訊</h1>
-                <!-- <div>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="">
-                        <button class="btn btn-outline-secondary">Share</button>
-                        <button class="btn btn-outline-secondary">Export</button>
-                    </div>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="">
-                        <button class="btn btn-outline-secondary">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            This Week
-                        </button>
-                    </div>
-                </div> -->
             </div>
-            <div class="chart">
-
-            </div>
-            <!-- <h2>Section title</h2> -->
-
             <div class="table-responsive small ">
                 <div class="py-2 d-flex justify-content-between align-items-center">
                     <a class="btn btn-primary mb-3" href="add_camp.php">新增</a>
@@ -275,7 +209,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     </ul>
                 </nav>
             </div>
-        </div>
+        </div> -->
 
 
     </main>

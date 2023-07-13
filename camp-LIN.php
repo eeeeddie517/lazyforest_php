@@ -51,14 +51,14 @@ $row = $result->fetch_assoc();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <a href="doDelete.php?camp_id=<?= $camp_id ?>" class="btn btn-danger">確認</a>
+                    <a href="doDelete-LIN.php?camp_id=<?= $camp_id ?>" class="btn btn-danger">確認</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-primary" href="camp_info.php">回營地列表</a>
+            <a class="btn btn-primary" href="camp_info-LIN.php">回營地列表</a>
         </div>
         <table class="table table-bordered ">
             <tr>
@@ -87,7 +87,7 @@ $row = $result->fetch_assoc();
             </tr>
         </table>
         <div class="py-2">
-            <a class="btn btn-primary" href="camp-edit.php?camp_id=<?= $row["camp_id"] ?>">編輯</a>
+            <a class="btn btn-primary" href="camp-edit-LIN.php?camp_id=<?= $row["camp_id"] ?>">編輯</a>
             <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">下架</button>
         </div>
 

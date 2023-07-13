@@ -1,6 +1,6 @@
 <?php
 
-require_once("../db_connect_camp-YU.php");
+require_once("../db_connect.php");
 
 $page = $_GET["page"] ?? 1;
 $type = $_GET["type"] ?? 1;

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Create User</title>
+  <title>Create Camp</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,9 +16,9 @@
 <body>
   <div class="container">
     <div class="py-2">
-      <a class="btn btn-primary" href="camp_info.php">回營地列表</a>
+      <a class="btn btn-primary" href="camp_info-LIN.php">回營地列表</a>
     </div>
-    <form action="doCreate.php" method="post">
+    <form action="doCreate-LIN.php" method="post">
         <div class="mb-2">
             <label class="fw-bolder" for="">營地名稱</label>
             <input type="text" class="form-control" name="camp_name">
@@ -38,14 +38,12 @@
         <div class="mb-2">
             <label class="fw-bolder" for="">營地介紹</label>
             <br>
-            <textarea name="camp_introduce" id="" cols="30" rows="10"></textarea>
-            <!-- <input type="text" class="form-control" name="name"> -->
+            <textarea name="camp_introduce" id="" cols="50" rows="5"></textarea>
         </div>
         <div class="mb-2">
             <label class="fw-bolder" for="">營地注意事項</label>
             <br>
-            <textarea name="camp_notice" id="" cols="30" rows="10"></textarea>
-            <!-- <input type="text" class="form-control" name="name"> -->
+            <textarea name="camp_notice" id="" cols="50" rows="5"></textarea>
         </div>
         
         <button class="btn btn-primary my-2" type="submit">送出</button>

@@ -5,7 +5,7 @@ if (!isset($_GET["id"])) {
 }
 $id = $_GET["id"];
 
-require_once("../db_connect_camp.php");
+require_once("../db_connect.php");
 $sql = "SELECT * FROM camps WHERE id=$id ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -31,7 +31,7 @@ $row = $result->fetch_assoc();
 <body>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-info" href="camp-list.php">回使用者列表</a>
+            <a class="btn btn-info" href="camp_ground-LIN.php">回使用者列表</a>
         </div>
         <table class="table table-bordered ">
             <tr>
@@ -60,7 +60,7 @@ $row = $result->fetch_assoc();
             </tr>
         </table>
         <div class="py-2">
-            <a class="btn btn-info" href="camp-edit.php?id=<?=$row["id"]?>">編輯</a>
+            <a class="btn btn-info" href="camp-edit-YU.php?id=<?=$row["id"]?>">編輯</a>
         </div>
     </div>
 </body>
