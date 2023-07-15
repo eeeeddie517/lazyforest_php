@@ -240,7 +240,7 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <?php for ($i = 1; $i <= $tatalPage; $i++) : ?>
-                                <li class="page-item <?php if ($i == $page) echo "active" ?>"><a class="page-link " href="TING\project/category-list-Ting.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                                <li class="page-item <?php if ($i == $page) echo "active" ?>"><a class="page-link " href="category_list-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                             <?php endfor; ?>
                         </ul>
                     </nav>
