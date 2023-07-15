@@ -116,6 +116,12 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                         營位預定
                     </a>
                 </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        類別管理
+                    </a>
+                </li>
             </ul>
             <ul class="list-unstyled">
                 <hr>
