@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-info" href="camp_ground-LIN.php">回使用者列表</a>
+            <a class="btn btn-info" href="../camp_ground-LIN.php">回使用者列表</a>
         </div>
         <form action="doCreate.php" method="post">
             <div class="mb-2">

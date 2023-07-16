@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("../db_connect.php");
+require_once("db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
@@ -31,7 +31,7 @@ if ($type == 1) {
 } elseif ($type == 4) {
     $orderBy = "ORDER BY camp_altitude DESC";
 } else {
-    header("location: ../404.php");
+    header("location: 404.php");
 }
 
 $sql =
@@ -103,6 +103,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <aside class="main-aside position-fixed bg-light vh-100 border-end">
         <nav class="">
             <ul class="list-unstyled">
+                <!-- if ($_SESSION['user']['name'] !== 'Joe'): 
+                endif;  用session判斷哪些要讓user看到的寫法! -->
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("../db_connect.php");
+require_once("db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
@@ -27,7 +27,7 @@ if ($type == 1) {
 } elseif ($type == 4) {
     $orderBy = "ORDER BY price DESC";
 } else {
-    header("location:../404.php");
+    header("location:404.php");
 }
 
 $sql = "SELECT camps.*, camp_info.camp_name AS camp_name
@@ -150,15 +150,15 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
 
             <div class="py-2 d-flex justify-content-end">
                 <div class="dropdown">
-                    <a class="btn btn-info" href="create-camp-YU.php">新增營地</a>
+                    <a class="btn btn-info" href="Camp_Ground/create-camp-YU.php">新增營地</a>
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         排序
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>id <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
-                        <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>id <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
-                        <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                        <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
+                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>id <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
+                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>id <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
+                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -167,9 +167,9 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                 <?php foreach ($campRows as $camps) : ?>
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
-                            <a href="camp-YU.php?id=<?= $camps["id"] ?>">
+                            <a href="Camp_Ground/camp-YU.php?id=<?= $camps["id"] ?>">
                                 <figure class="ratio ratio-1x1">
-                                    <img class="object-fit-cover card-img-top" src="camp_img/<?= $camps["image"] ?>" alt="<?= $camps["camp_name"] ?>">
+                                    <img class="object-fit-cover card-img-top" src="Camp_Ground/camp_img/<?= $camps["image"] ?>" alt="<?= $camps["camp_name"] ?>">
                                 </figure>
                             </a>
                             <div class="px-3 mb-3">
@@ -177,7 +177,7 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                                 <h3 class="h6"><?= $camps["part"] ?></h3>
                                 <div class="price text-end h5 text-success">$<?= $camps["price"] ?></div>
                                 <div class="d-grid py-2">
-                                    <a href="camp-YU.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</a>
+                                    <a href="Camp_Ground/camp-YU.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</a>
                                 </div>
                                 <div class="d-grid"></div>
                             </div>

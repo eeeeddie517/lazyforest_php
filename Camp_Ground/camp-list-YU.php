@@ -22,7 +22,7 @@ if ($type == 1) {
 } elseif ($type == 4) {
     $orderBy = "ORDER BY price DESC";
 } else {
-    header("location:../404.php");
+    header("location: ../404.php");
 }
 
 
@@ -61,16 +61,15 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
 
         <div class="py-2 d-flex justify-content-end">
             <div class="dropdown">
-                <a class="btn btn-info" href="create-camp.php">新增營地</a>
+                <a class="btn btn-info" href="create-camp-YU.php">新增營地</a>
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     排序
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>id <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
-
-                    <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>id <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
-                    <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                    <li><a class="dropdown-item" href="camp-list.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
+                    <li><a class="dropdown-item" href="camp-list-YU.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>id <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
+                    <li><a class="dropdown-item" href="camp-list-YU.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>id <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
+                    <li><a class="dropdown-item" href="camp-list-YU.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+                    <li><a class="dropdown-item" href="camp-list-YU.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -79,7 +78,7 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
             <?php foreach ($campRows as $camps) : ?>
                 <div class="col-lg-3 col-md-6 ">
                     <div class="card">
-                        <a href="camp.php?id=<?= $camps["id"] ?>">
+                        <a href="camp-YU.php?id=<?= $camps["id"] ?>">
                             <figure class="ratio ratio-1x1">
                                 <img class="object-fit-cover card-img-top" src="../camp_img/<?= $camps["image"] ?>" alt="<?= $camps["name"] ?>">
                             </figure>
@@ -90,7 +89,7 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                             <h3 class="h6 "><?= $camps["part"] ?></a></h3>
                             <div class="price text-end h5 text-success">$<?= $camps["price"] ?></div>
                             <div class="d-grid py-2">
-                                <a href="camp.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</data-id=></a>
+                                <a href="camp-YU.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</data-id=></a>
                             </div>
                             <div class="d-grid">
                             </div>
@@ -104,7 +103,7 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                 <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                     <li class="page-item 
                     <?php if ($i == $page) echo "active"; ?>">
-                        <a class="page-link" href="camp-list.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
+                        <a class="page-link" href="camp-list-YU.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
             </ul>

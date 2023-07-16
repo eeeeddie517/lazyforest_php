@@ -1,7 +1,7 @@
 <?php
 if (!isset($_GET["camp_id"])) {
     // die("資料不存在");
-    header("location: /404.php");
+    header("location: ../404.php");
 }
 $camp_id = $_GET["camp_id"];
 

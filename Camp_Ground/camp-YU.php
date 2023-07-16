@@ -1,7 +1,7 @@
 <?php
 if (!isset($_GET["id"])) {
     // die("資料不存在");
-    header("location: /404.php");
+    header("location: ../404.php");
 }
 $id = $_GET["id"];
 
@@ -31,7 +31,7 @@ $row = $result->fetch_assoc();
 <body>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-info" href="camp_ground-LIN.php">回使用者列表</a>
+            <a class="btn btn-info" href="../camp_ground-LIN.php">回使用者列表</a>
         </div>
         <table class="table table-bordered ">
             <tr>

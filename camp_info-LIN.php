@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("../db_connect.php");
+require_once("db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
@@ -31,7 +31,7 @@ if ($type == 1) {
 } elseif ($type == 4) {
     $orderBy = "ORDER BY camp_altitude DESC";
 } else {
-    header("location: ../404.php");
+    header("location: 404.php");
 }
 
 $sql =
@@ -152,14 +152,14 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             </div>
             <div class="table-responsive small ">
                 <div class="py-2 d-flex justify-content-between align-items-center">
-                    <a class="btn btn-primary mb-3" href="add_camp-LIN.php">新增</a>
+                    <a class="btn btn-primary mb-3" href="Camp_Info/add_camp-LIN.php">新增</a>
                     <div>
                         共 <?= $totalCamp ?> 個營地, 第 <?= $page ?> 頁
                     </div>
                 </div>
                 <div class="py-2">
                     <div class="mx-1 py-2 d-flex justify-content-between">
-                        <form action="search-LIN.php">
+                        <form action="Camp_Info/search-LIN.php">
                             <div class="row gx-2">
                                 <div class="col">
                                     <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
@@ -198,7 +198,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 <td><?= $row["camp_phone"] ?></td>
                                 <td><?= $row["camp_altitude"] ?> 公尺</td>
                                 <td>
-                                    <a class="btn btn-primary" href="camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
+                                    <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
                                     
                                 </td>
                             </tr>

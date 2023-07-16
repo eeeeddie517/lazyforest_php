@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("../db_connect.php");
+require_once("db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
@@ -36,7 +36,7 @@ if ($type == 1) {
 } elseif ($type == 4) {
     $orderBy = "ORDER BY category_name DESC";
 } else {
-    header("location:../404.php");
+    header("location: 404.php");
 }
 
 
@@ -118,7 +118,7 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
                     <?php foreach ($resultseq as $name) : ?>
                         <?php $id = $name["category_id"]; ?>
                     <?php endforeach ?>
-                    <a href="TING\project/doDelete-Ting.php?id=<?= $id ?>" class="btn btn-danger">確定</a>
+                    <a href="Category/doDelete-Ting.php?id=<?= $id ?>" class="btn btn-danger">確定</a>
 
                 </div>
             </div>
@@ -186,7 +186,7 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
 
             <div class="d-flex justify-content-between align-items-center my-2">
 
-                <form action="TING\project/search-Ting.php">
+                <form action="Category/search-Ting.php">
                     <div class="d-flex px-2">
                         <input type="text" class="col-6 form-control" placeholder="搜尋類別" name="name">
                         <button class="btn btn-info col-3 mx-1" type="submit">搜尋</button>
@@ -195,7 +195,7 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
 
             </div>
             <div class="d-flex align-items-end justify-content-between">
-                <a href="TING\project/create-category-Ting.php" role="button" class="my-2 text-end btn btn-outline-secondary">新增類別</a>
+                <a href="Category/create-category-Ting.php" role="button" class="my-2 text-end btn btn-outline-secondary">新增類別</a>
 
                 <div class="p-3 d-flex justify-content-end">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -226,7 +226,7 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
                                 <td><?= $name["category_id"] ?></td>
                                 <td><?= $name["category_name"] ?></td>
                                 <td>
-                                    <a href="TING\project/edit-category-Ting.php?id=<?= $name["category_id"] ?>" role="button" class="btn btn-success">編輯類別</a>
+                                    <a href="Category/edit-category-Ting.php?id=<?= $name["category_id"] ?>" role="button" class="btn btn-success">編輯類別</a>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除類別</button>
                                 </td>
 

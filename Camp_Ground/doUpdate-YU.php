@@ -7,7 +7,7 @@ $image=$_POST["image"];
 $price=$_POST["price"];
 $description=$_POST["description"];
 
-require_once("../db_connect_camp.php");
+require_once("../db_connect.php");
 
 
 
@@ -15,7 +15,7 @@ $sql="UPDATE camps SET part='$part', amount='$amount', image='$image', price='$p
 
 
 if ($conn->query($sql) === TRUE) {
-    header("location: camp-edit.php?id=".$id);
+    header("location: ../camp_ground-LIN.php?id=".$id);
 
 } else {
 	echo "新增資料錯誤: " . $conn->error;

@@ -29,7 +29,7 @@ if (isset($_GET["camp_name"])) {
 <body>
     <div class="container">
         <div class="py-2">
-            <a class="btn btn-primary" href="camp_info-LIN.php">回營地列表</a>
+            <a class="btn btn-primary" href="../camp_info-LIN.php">回營地列表</a>
         </div>
         <div class="py-2">
             <form action="search-LIN.php">

@@ -12,7 +12,7 @@ $sql="UPDATE camp_info SET valid=0 WHERE camp_id = '$camp_id'";
 
 
 if ($conn->query($sql) === TRUE) {
-    header("location: camp_info-LIN.php");
+    header("location: ../camp_info-LIN.php");
 
 } else {
     echo "刪除資料錯誤: " . $conn->error;

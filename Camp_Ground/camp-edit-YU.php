@@ -1,7 +1,7 @@
 <?php
 if (!isset($_GET["id"])) {
     // die("資料不存在");
-    header("location: /404.php");
+    header("location: ../404.php");
 }
 $id = $_GET["id"];
 
@@ -46,7 +46,7 @@ $row = $result->fetch_assoc();
         </div>
     </div>
     <div class="container py-3">
-        <form action="doUpdate.php" method="post">
+        <form action="doUpdate-YU.php" method="post">
             <table class="table table-bordered">
                 <input type="hidden" name="id" value="<?= $row["id"] ?>">
                 <tr>
