@@ -13,12 +13,18 @@ Midterm assignment
 1. 刪除類別會從第五個開始刪 (需調整)
 <hr>
 
-歆語   整合ING
+歆語   整合OK
+1. SIGN IN 改成LIAO ver(to do)
 <hr>
 
-子云   未交
+子云   整合ING
+1. js.php 沒給(if need)
+2. product-picture.php 沒給
+3. 照片不要有中文->會死圖 (須重新改檔名)
+4. DB brand_intro ->varchar(1500)改text
+5. 有bug
 <hr>
 
-千僖   未交
+千僖   整合ING
 <hr>
 
