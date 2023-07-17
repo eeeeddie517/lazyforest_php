@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("./db_connect_camp-YU.php");
+require_once("./Camp_Ground/db_connect_camp-YU.php");
 
 
 if (!isset($_SESSION["user"])) {
@@ -19,9 +19,9 @@ $startItem = ($page - 1) * $perPage;
 $totalPage = ceil($totalCamps / $perPage);
 
 if ($type == 1) {
-    $orderBy = "ORDER BY id ASC";
+    $orderBy = "ORDER BY camp_name ASC";
 } elseif ($type == 2) {
-    $orderBy = "ORDER BY id DESC";
+    $orderBy = "ORDER BY camp_name DESC";
 } elseif ($type == 3) {
     $orderBy = "ORDER BY price ASC";
 } elseif ($type == 4) {
@@ -39,7 +39,11 @@ $sql = "SELECT camps.*, camp_info.camp_name AS camp_name
 
 $result = $conn->query($sql);
 $campRows = $result->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -142,70 +146,71 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
     </aside>
     <main class="main-content ">
         <div class="container">
-            <div class="py-2 d-flex justify-content-between align-items-center">
-                <div>
-                    共 <?= $totalCamps ?> 筆，第<?= $page ?> 頁
+            <div class="px-3">
+                <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                    <h1>營位管理</h1>
                 </div>
-            </div>
 
-            <div class="py-2 d-flex justify-content-end">
-                <div class="dropdown">
-                    <a class="btn btn-info" href="Camp_Ground/create-camp-YU.php">新增營地</a>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        排序
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>id <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
-                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>id <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
-                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                        <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
-                    </ul>
+                <div class="py-2 d-flex justify-content-between">
+                    <div>
+                        共 <?= $totalCamps ?> 筆，第<?= $page ?>頁
+                    </div>
+                    <div class="dropdown">
+                        <a class="btn btn-success" href="Camp_Ground/create-camp-YU.php">新增營區</a>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            排序
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>營地名稱 <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
+                            <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>營地名稱 <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
+                            <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+                            <li><a class="dropdown-item" href="camp_ground-LIN.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>價錢 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row g-3 py-3">
-                <?php foreach ($campRows as $camps) : ?>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <a href="Camp_Ground/camp-YU.php?id=<?= $camps["id"] ?>">
-                                <figure class="ratio ratio-1x1">
-                                    <img class="object-fit-cover card-img-top" src="Camp_Ground/camp_img/<?= $camps["image"] ?>" alt="<?= $camps["camp_name"] ?>">
-                                </figure>
-                            </a>
-                            <div class="px-3 mb-3">
-                                <h3 class="h6"><?= $camps["camp_name"] ?></h3>
-                                <h3 class="h6"><?= $camps["part"] ?></h3>
-                                <div class="price text-end h5 text-success">$<?= $camps["price"] ?></div>
-                                <div class="d-grid py-2">
-                                    <a href="Camp_Ground/camp-YU.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</a>
+                <div class="row g-3 py-3">
+                    <?php foreach ($campRows as $camps) : ?>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card">
+                                <a href="Camp_Ground/camp-YU.php?id=<?= $camps["id"] ?>">
+                                    <figure class="ratio ratio-1x1">
+                                        <img class="object-fit-cover card-img-top" src="Camp_Ground/camp_img/<?= $camps["image"] ?>" alt="<?= $camps["camp_name"] ?>">
+                                    </figure>
+                                </a>
+                                <div class="px-3 mb-3">
+                                    <h3 class="h6"><?= $camps["camp_name"] ?></h3>
+                                    <h3 class="h6"><?= $camps["part"] ?></h3>
+                                    <div class="price text-end h5 text-success">$<?= $camps["price"] ?></div>
+                                    <div class="d-grid py-2">
+                                        <a href="Camp_Ground/camp-YU.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</a>
+                                    </div>
+                                    <div class="d-grid"></div>
                                 </div>
-                                <div class="d-grid"></div>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                            <li class="page-item <?php if ($i == $page) echo "active"; ?>">
+                                <a class="page-link" href="camp_ground-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+
             </div>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                        <li class="page-item <?php if ($i == $page) echo "active"; ?>">
-                            <a class="page-link" href="camp_ground-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
-                        </li>
-                    <?php endfor; ?>
-                </ul>
-            </nav>
+
 
             <script>
                 let camps = <?= json_encode($campRows) ?>;
                 console.log(camps);
             </script>
     </main>
-
-
-
-
-
 
 
 

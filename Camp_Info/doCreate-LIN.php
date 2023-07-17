@@ -4,7 +4,7 @@ if (!isset($_POST["camp_name"])) {
     die("請依正常管道到此頁");
 }
 
-require_once("./db_connect_camp-YU.php");
+require_once("./Camp_Ground/db_connect_camp-YU.php");
 
 $camp_name = $_POST["camp_name"];
 $camp_address = $_POST["camp_address"];

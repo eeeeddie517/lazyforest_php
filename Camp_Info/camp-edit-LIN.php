@@ -5,7 +5,7 @@ if (!isset($_GET["camp_id"])) {
 }
 $camp_id = $_GET["camp_id"];
 
-require_once("./db_connect_camp-YU.php");
+require_once("./Camp_Ground/db_connect_camp-YU.php");
 
 $sql = "SELECT * FROM camp_info WHERE camp_id=$camp_id AND valid=1";
 $result = $conn->query($sql);
