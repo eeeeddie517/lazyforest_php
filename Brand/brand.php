@@ -3,9 +3,10 @@ if (!isset($_GET["brand_id"])) {
     // die("資料不存在");
     // header("location: /404.php");
 }
+
 $brand_id = $_GET["brand_id"];
 
-require_once("../db-connect.php");
+require_once("../db_connect.php");
 $sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE valid = 1";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();

@@ -8,37 +8,38 @@ if (!isset($_SESSION["user"])) {
 }
 
 $page = $_GET["page"] ?? 1;
+
 $type = $_GET["type"] ?? 1;
 
-
-// 找出所有使用者
-$sqlTotal = "SELECT * FROM member_list WHERE valid=1";
+$sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1";
 $resultTotal = $conn->query($sqlTotal);
+$totalBrand = $resultTotal->num_rows;
 
-//計算使用者總量
-$totalMember = $resultTotal->num_rows;
-
-//頁數
 $perPage = 5;
-$totalPage = ceil($totalMember / $perPage);
-$startPage = ($page - 1) * $perPage;
-//limit前面一個數字為開始的筆數，後面的為抓取筆數
+$startItem = ($page - 1) * $perPage;
 
-//排序id,name
+//計算總頁數，有餘數的話就需要再新增一頁 -> 無條件進位得出所需頁數
+$totalPage = ceil($totalBrand / $perPage);
+
 if ($type == 1) {
-    $ORDERBY = "ORDER BY user_id ASC";
+    $orderBY = "ORDER BY brand_id ASC";
 } elseif ($type == 2) {
-    $ORDERBY = "ORDER BY user_id DESC";
+    $orderBY = "ORDER BY brand_id DESC";
 } elseif ($type == 3) {
-    $ORDERBY = "ORDER BY user_name ASC";
+    $orderBY = "ORDER BY brand_name ASC";
+} elseif ($type == 4) {
+    $orderBY = "ORDER BY brand_name DESC";
 } else {
-    $ORDERBY = "ORDER BY user_name DESC";
+    header("location: ../404.php");
 }
 
-$sqlPage = "SELECT member_list.* , member_city.city_name AS city_name FROM member_list 
-JOIN member_city ON city_id = user_city WHERE valid=1 $ORDERBY LIMIT $startPage,$perPage";
-$result = $conn->query($sqlPage);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+$sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE valid = 1 $orderBY LIMIT $startItem, $perPage";
+
+
+
+
+$result = $conn->query($sql);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,9 +50,12 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS v5.3.0 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="Brand/all.css">
     <style>
         body {
             height: 2000px;
@@ -155,72 +159,74 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
     </aside>
     <main class="main-content ">
-        <div class="px-3">
-            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                <h1>Member List</h1>
-                <h6>共 <?= $totalMember ?> 筆，第<?= $page ?> 頁</h6>
-            </div>
-            <div class="m-3 d-flex justify-content-between">
-                <!-- 搜尋bar -->
-                <form action="Member/do-search-Liao.php">
+        <div class="container">
+            <!-- <?= $totalPage ?> -->
+            <div class="py-2">
+                <form action="Brand/brand-search.php">
                     <div class="row">
                         <div class="col">
-                            <input class="form-control" type="text" name="name" placeholder="搜尋使用者">
+                            <input type="text" class="form-control" placeholder="搜尋商家" name="name">
                         </div>
-                        <div class="col-auto">
-                            <button class="btn btn-dark" type="submit">搜尋</button>
+                        <div class="col-auto"><button class="btn btn-warning" type="submit">搜尋</button>
                         </div>
                     </div>
                 </form>
-                <!-- 搜尋按鈕 -->
-                <div class="search-btn">
-                    <div class="btn-group me-2">
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=1" class="btn btn-light"><i class="fa-solid fa-arrow-down"></i> id</a>
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=2" class="btn btn-light"><i class="fa-solid fa-arrow-up"></i> id</a>
-                    </div>
-                    <div class="btn-group">
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=3" class="btn btn-light"><i class="fa-solid fa-arrow-down"></i> name</a>
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=4" class="btn btn-light"><i class="fa-solid fa-arrow-up"></i> name</a>
-                    </div>
-                </div>
-
             </div>
-
-
-            <!-- 表格 table -->
+            <?php
+            $brand_count = $result->num_rows;
+            ?>
+            <div class="py-2 d-flex justify-content-between align-items-center"><a href="Brand/brand-create.php" class="btn btn-warning">新增</a>
+                <div>
+                    共 <?= $totalBrand ?> 筆, 第 <?= $page ?> 頁
+                </div>
+            </div>
+            <div class="py-2 d-flex justify-content-end">
+                <div class="btn-group">
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=1" class="btn btn-dark <?php if ($type == 1) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=2" class="btn btn-dark <?php if ($type == 2) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=3" class="btn btn-dark <?php if ($type == 3) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=4" class="btn btn-dark <?php if ($type == 4) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                </div>
+            </div>
+            <?php
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+            // var_dump($rows);
+            // exit;
+            ?>
             <table class="table table-bordered">
-                <thead class="table-dark">
+                <thead>
                     <tr>
-                        <th>id</th>
-                        <th>姓名</th>
-                        <th>帳號（信箱）</th>
-                        <th>電話</th>
-                        <th>居住城市</th>
-                        <th>詳細資訊</th>
+                        <th class="col-0 ">id</th>
+                        <th class="col-2">logo</th>
+                        <th class="col-2">品牌名稱</th>
+                        <th class="col-7">品牌介紹</th>
+                        <th class="col-1"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($rows as $member) : ?>
+                    <?php foreach ($rows as $row) : ?>
                         <tr>
-                            <td><?= $member["user_id"] ?></td>
-                            <td><?= $member["user_name"] ?></td>
-                            <td><?= $member["user_email"] ?></td>
-                            <td><?= $member["user_phone"] ?></td>
-                            <td><?= $member["city_name"] ?></td>
-                            <td><a class="btn btn-primary" href="Member/member-detail-Liao.php?id=<?= $member["user_id"] ?>">顯示</a></td>
-
+                            <td><?= $row["brand_id"] ?></td>
+                            <td>
+                                <figure><img src="Brand/brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
+                            </td>
+                            <td><?= $row["brand_name"] ?></td>
+                            <td><?= $row["brand_intro"] ?></td>
+                            <td class="text-center"><a href="Brand/brand.php?id=<?= $row["brand_id"] ?>" class="btn btn-warning">檢視</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-
-
-            <!-- 分頁 -->
-            <nav aria-label="...">
+            <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                        <li class="page-item <?php if ($page == $i) echo "active"; ?> "><a class="page-link" href="member_list-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                        <li class="page-item <?php
+                                                if ($i == $page) echo "active"; ?>
+                "><a class="page-link" href="brand-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
+                    <!-- <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=2">2</a></li>
+                <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=3">3</a></li>
+                <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=4">4</a></li> -->
                 </ul>
             </nav>
         </div>

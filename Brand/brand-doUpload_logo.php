@@ -1,6 +1,6 @@
 <?php
 
-require_once("../db-connect.php");
+require_once("../db_connect.php");
 
 $brand_id = $_POST["brand_id"];
 
@@ -15,7 +15,7 @@ if ($_FILES["file"]["error"] == 0) {
 
         if ($conn->query($sql) === TRUE) {
 
-            header("location: brand_list.php");
+            header("location: ../brand-LIN.php");
         } else {
             echo "新增資料錯誤 : " . $conn->error;
         }

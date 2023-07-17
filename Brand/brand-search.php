@@ -3,7 +3,7 @@
 if (isset($_GET["brand_name"])) {
 
     $brand_name = $_GET["brand_name"];
-    require_once("../db-connect.php");
+    require_once("../db_connect.php");
 
     $sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE brand_name LIKE '%$brand_name%' AND valid = 1";
     $result = $conn->query($sql);
@@ -38,7 +38,7 @@ if (isset($_GET["brand_name"])) {
 <body>
     <div class="container">
         <div class="py-2">
-            <a href="brand-list.php" class="btn btn-warning">回商家列表</a>
+            <a href="../brand-LIN.php" class="btn btn-warning">回商家列表</a>
         </div>
         <div class="py-2">
             <form action="brand-search.php">

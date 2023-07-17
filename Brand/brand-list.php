@@ -5,7 +5,7 @@ $page = $_GET["page"] ?? 1;
 $type = $_GET["type"] ?? 1;
 
 
-require_once("../db-connect.php");
+require_once("../db_connect.php");
 
 $sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1";
 $resultTotal = $conn->query($sqlTotal);
@@ -15,15 +15,15 @@ $perPage = 5;
 $startItem = ($page - 1) * $perPage;
 
 //計算總頁數，有餘數的話就需要再新增一頁 -> 無條件進位得出所需頁數
-$totalPage = ceil($totalBrand/$perPage);
+$totalPage = ceil($totalBrand / $perPage);
 
-if($type == 1) {
+if ($type == 1) {
     $orderBY = "ORDER BY brand_id ASC";
-} elseif($type == 2) {
+} elseif ($type == 2) {
     $orderBY = "ORDER BY brand_id DESC";
-} elseif($type == 3) {
+} elseif ($type == 3) {
     $orderBY = "ORDER BY brand_name ASC";
-} elseif($type == 4) {
+} elseif ($type == 4) {
     $orderBY = "ORDER BY brand_name DESC";
 } else {
     header("location: ../404.php");
@@ -59,7 +59,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-<div class="container">
+    <div class="container">
         <!-- <?= $totalPage ?> -->
         <div class="py-2">
             <form action="brand-search.php">
@@ -82,10 +82,10 @@ $result = $conn->query($sql);
         </div>
         <div class="py-2 d-flex justify-content-end">
             <div class="btn-group">
-                <a href="brand-list.php?page=<?= $page ?>& type=1" class="btn btn-dark <?php if($type==1) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                <a href="brand-list.php?page=<?= $page ?>& type=2" class="btn btn-dark <?php if($type==2) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                <a href="brand-list.php?page=<?= $page ?>& type=3" class="btn btn-dark <?php if($type==3) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                <a href="brand-list.php?page=<?= $page ?>& type=4" class="btn btn-dark <?php if($type==4) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                <a href="brand-list.php?page=<?= $page ?>& type=1" class="btn btn-dark <?php if ($type == 1) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                <a href="brand-list.php?page=<?= $page ?>& type=2" class="btn btn-dark <?php if ($type == 2) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                <a href="brand-list.php?page=<?= $page ?>& type=3" class="btn btn-dark <?php if ($type == 3) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                <a href="brand-list.php?page=<?= $page ?>& type=4" class="btn btn-dark <?php if ($type == 4) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-wide-short"></i></a>
             </div>
         </div>
         <?php
@@ -107,7 +107,9 @@ $result = $conn->query($sql);
                 <?php foreach ($rows as $row) : ?>
                     <tr>
                         <td><?= $row["brand_id"] ?></td>
-                        <td><figure><img src="../brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure></td>
+                        <td>
+                            <figure><img src="../brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
+                        </td>
                         <td><?= $row["brand_name"] ?></td>
                         <td><?= $row["brand_intro"] ?></td>
                         <td class="text-center"><a href="brand.php?id=<?= $row["brand_id"] ?>" class="btn btn-warning">檢視</a></td>
@@ -117,11 +119,11 @@ $result = $conn->query($sql);
         </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <?php for($i = 1; $i <= $totalPage; $i++): ?>
-                <li class="page-item <?php
-                if($i == $page) echo "active"; ?>
-                "><a class="page-link" href="brand-list.php?page=<?=$i?>&type=<?=$type?>"><?=$i?></a></li>
-                <?php endfor;?>
+                <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                    <li class="page-item <?php
+                                            if ($i == $page) echo "active"; ?>
+                "><a class="page-link" href="brand-list.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                <?php endfor; ?>
                 <!-- <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=2">2</a></li>
                 <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=3">3</a></li>
                 <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=4">4</a></li> -->

@@ -4,7 +4,7 @@ if (!isset($_POST["brand_name"])) {
     die("請依正常管道前往此頁");
 }
 
-require_once("../db-connect.php");
+require_once("../db_connect.php");
 
 $brand_name = $_POST["brand_name"];
 $brand_intro = $_POST["brand_intro"];
@@ -38,7 +38,7 @@ VALUES ('$brand_name', '$brand_intro', '$brand_logo', '$brand_img', 1)";
 if ($conn->query($sql) === TRUE) { 
     $latestId = $conn->insert_id;
     echo "新增資料完成";
-    header("location: brand-list.php");
+    header("location: ../brand-LIN.php");
 
 } else {
 echo "新增資料錯誤 : " . $conn->error;

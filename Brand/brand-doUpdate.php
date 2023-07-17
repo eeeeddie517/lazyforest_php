@@ -6,7 +6,7 @@ $brand_logo = $_POST["brand_logo"];
 $brand_img = $_POST["brand_img"];
 
 
-require_once("../db-connect.php");
+require_once("../db_connect.php");
 
 $sql = "UPDATE brand_info SET brand_name='$brand_name', brand_intro='$brand_intro', brand_logo='$brand_logo', brand_img='$brand_img' WHERE brand_id=$brand_id";
 
