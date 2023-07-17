@@ -7,8 +7,7 @@ $camp_altitude=$_POST["camp_altitude"];
 $camp_introduce=$_POST["camp_introduce"];
 $camp_notice=$_POST["camp_notice"];
 
-
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 
 $sql="UPDATE camp_info SET camp_name='$camp_name', camp_address='$camp_address', camp_phone='$camp_phone', camp_altitude='$camp_altitude', camp_introduce='$camp_introduce', camp_notice='$camp_notice' WHERE camp_id=$camp_id";
 

@@ -3,7 +3,7 @@
 if(!isset($_GET["camp_id"])){
    die("無法作業"); 
 }
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 
 $camp_id=$_GET["camp_id"];
 

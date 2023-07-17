@@ -2,7 +2,7 @@
 // if (!isset($_POST["name"])) {
 //     die("請依正常管道進入");
 // }
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 $name = $_POST["updateName"];
 $id = $_POST["id"];
 // echo $name;

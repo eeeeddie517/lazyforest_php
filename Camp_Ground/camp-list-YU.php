@@ -1,6 +1,6 @@
 <?php
 
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 
 $page = $_GET["page"] ?? 1;
 $type = $_GET["type"] ?? 1;
@@ -26,7 +26,12 @@ if ($type == 1) {
 }
 
 
-$sql = "SELECT * FROM camps WHERE valid=1 $orderBy LIMIT $starItem, $perPage";
+$sql = "SELECT camps.*, camp_info.camp_name AS camp_name
+        FROM camps
+        JOIN camp_info ON camps.camp_id = camp_info.camp_id
+        WHERE camps.valid = 1
+        $orderBy
+        LIMIT $startItem, $perPage";
 $result = $conn->query($sql);
 $campRows = $result->fetch_all(MYSQLI_ASSOC);
 

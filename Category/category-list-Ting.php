@@ -1,5 +1,5 @@
 <?php
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 $sql = "SELECT * FROM db";
 
 $result = $conn->query($sql);

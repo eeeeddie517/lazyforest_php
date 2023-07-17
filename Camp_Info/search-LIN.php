@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET["camp_name"])) {
     $camp_name = $_GET["camp_name"];
-    require_once("../db_connect.php");
+    require_once("./db_connect_camp-YU.php");
 
     $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE camp_name LIKE '%$camp_name%' AND valid=1 ";
     $result = $conn->query($sql);

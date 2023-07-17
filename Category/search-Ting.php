@@ -4,7 +4,7 @@
 $name = $_GET["name"];
 if (isset($_GET["name"])) {
     $name = $_GET["name"];
-    require_once("../db_connect.php");
+    require_once("./db_connect_camp-YU.php");
     $sql = "SELECT category_id,category_name FROM db WHERE category_name LIKE '%$name%'AND valid=1 ";  //LIKE '%To%' 可用來篩選符合條件的字串(有To的)
 
     $result = $conn->query($sql);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("db_connect.php");
+require_once("./db_connect_camp-YU.php");
 
 
 if (!isset($_SESSION["user"])) {

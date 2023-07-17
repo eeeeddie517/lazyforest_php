@@ -6,7 +6,7 @@ if (empty($_POST["name"])) {
     die("類別名稱不可空白");
 }
 
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 $name = $_POST["name"];
 $sql = "INSERT INTO db (category_name,valid)
 VALUES ('$name',1) ";

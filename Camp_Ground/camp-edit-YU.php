@@ -5,8 +5,8 @@ if (!isset($_GET["id"])) {
 }
 $id = $_GET["id"];
 
-require_once("../db_connect.php");
-$sql = "SELECT * FROM camps WHERE id=$id";
+require_once("./db_connect_camp-YU.php");
+$sql = "SELECT * FROM camps WHERE id=$id AND valid=1";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 // var_dump($row);

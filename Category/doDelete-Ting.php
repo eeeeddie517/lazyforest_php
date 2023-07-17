@@ -1,5 +1,5 @@
 <?php
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 if (!isset($_GET["id"])) {
     die("無法作業");
 }

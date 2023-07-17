@@ -17,7 +17,7 @@
         <div class="py-2">
             <a class="btn btn-info" href="../camp_ground-LIN.php">回使用者列表</a>
         </div>
-        <form action="doCreate.php" method="post">
+        <form action="doCreate-YU.php" method="post">
             <div class="mb-2">
                 <label for="">camp_id</label>
                 <input type="text" class="form-control" name="camp_id">

@@ -4,7 +4,7 @@ if (!isset($_POST["camp_id"])) {
     die("請依正常管道到此頁");
 }
 
-require_once("../db_connect.php");
+require_once("./db_connect_camp-YU.php");
 
 // $id = $_POST["id"];
 $camp_id = $_POST["camp_id"];
@@ -27,7 +27,7 @@ if ($conn->query($sql) === TRUE) {
 
     $latestId=$conn->insert_id;
     echo "資料表 camps 新增資料完成, id 為 $latestId";
-    header("location: ../camp_ground-LIN.php");
+    header("location: camp_ground-LIN.php");
 } else {
     echo "新增資料錯誤: " . $conn->error;
 }
