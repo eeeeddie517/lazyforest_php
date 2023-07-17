@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require_once("../db_connect.php");
 
 
 if (!isset($_POST["account"]) || empty($_POST["account"]) || !isset($_POST["password"]) || empty($_POST["password"])) {

@@ -106,7 +106,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
             <div class="me-3">
-                Hi, <?= $_SESSION["user"]["name"] ?>
+                Hi, <?= $_SESSION["user"]["user_name"] ?>
             </div>
             <a href="logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -323,7 +323,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
         let product_img = document.getElementById("product_img")
 
         add_product.addEventListener("click", function() {
-
+            alert("test");
             let formData = new FormData();
             formData.append("product_img", product_img.files[0]);
             formData.append("product_name", product_name.value);
@@ -336,7 +336,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
 
             $.ajax({
                 method: "POST",
-                url: "Product_Info/add-img-CH.php",
+                url: "http://localhost/lazyforest/Product_Info/add-product-CH.php",
                 dataType: "json",
                 data: formData,
                 processData: false,
@@ -359,7 +359,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
             
                     $.ajax({
                         method: "POST",
-                        url: "Product_Info/add-img-CH.php",
+                        url: "http://localhost/lazyforest/Product_Info/add-product-CH.php",
                         dataType: "json",
                         data: {
                             id: product_id,

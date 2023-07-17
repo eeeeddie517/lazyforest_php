@@ -13,7 +13,7 @@ $now = date('Y-m-d H:i:s');
 
 
 if($product_img["error"]==0) {
-    if(move_uploaded_file($_FILES["product_img"]["tmp_name"], "../images-CH/".$_FILES["product_img"]["name"])){
+    if(move_uploaded_file($_FILES["product_img"]["tmp_name"], "images-CH/".$_FILES["product_img"]["name"])){
         $product_img_name = $product_img["name"];
 
         //INSERT　INTO (table的名稱) (......) VALUES(寫進去的值) (......) (valid要在這邊對照成1 不然不會顯示出來)

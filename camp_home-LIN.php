@@ -4,7 +4,7 @@ require_once("db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
-    header("location: ../admin/sign-in.php");
+    header("location: Member/member-signIn-Liao.php");
 }
 
 $page = $_GET["page"] ?? 1;
@@ -92,7 +92,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
             <div class="me-3">
-                Hi, <?= $_SESSION["user"]["name"] ?>
+                Hi, <?= $_SESSION["user"]["user_name"] ?>
             </div>
             <a href="logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -105,12 +105,16 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             <ul class="list-unstyled">
                 <!-- if ($_SESSION['user']['name'] !== 'Joe'): 
                 endif;  用session判斷哪些要讓user看到的寫法! -->
+                <?php if (!isset($_SESSION["user"])) {
+                ?>
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                         Dashboard
                     </a>
                 </li>
+                <?php
+                }?>
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
