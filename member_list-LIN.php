@@ -4,45 +4,40 @@ require_once("db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
-    header("location: sign-in.php");
+    header("location: ../admin/sign-in.php");
 }
 
 $page = $_GET["page"] ?? 1;
-
 $type = $_GET["type"] ?? 1;
 
-$sqlTotal = "SELECT camp_id FROM camp_info WHERE valid=1";
+
+// 找出所有使用者
+$sqlTotal = "SELECT * FROM member_list WHERE valid=1";
 $resultTotal = $conn->query($sqlTotal);
-$totalCamp = $resultTotal->num_rows;
 
+//計算使用者總量
+$totalMember = $resultTotal->num_rows;
+
+//頁數
 $perPage = 5;
-$startItem = ($page - 1) * $perPage;
+$totalPage = ceil($totalMember / $perPage);
+$startPage = ($page - 1) * $perPage;
+//limit前面一個數字為開始的筆數，後面的為抓取筆數
 
-//計算總共頁數
-//無條件進位
-$totalPage = ceil($totalCamp / $perPage);
-
+//排序id,name
 if ($type == 1) {
-    $orderBy = "ORDER BY camp_id ASC";
+    $ORDERBY = "ORDER BY user_id ASC";
 } elseif ($type == 2) {
-    $orderBy = "ORDER BY camp_id DESC";
+    $ORDERBY = "ORDER BY user_id DESC";
 } elseif ($type == 3) {
-    $orderBy = "ORDER BY camp_altitude ASC";
-} elseif ($type == 4) {
-    $orderBy = "ORDER BY camp_altitude DESC";
+    $ORDERBY = "ORDER BY user_name ASC";
 } else {
-    header("location: 404.php");
+    $ORDERBY = "ORDER BY user_name DESC";
 }
 
-$sql =
-"SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude
- FROM camp_info
- WHERE valid = 1
- $orderBy 
- LIMIT $startItem, $perPage
-";
-
-$result = $conn->query($sql);
+$sqlPage = "SELECT member_list.* , member_city.city_name AS city_name FROM member_list 
+JOIN member_city ON city_id = user_city WHERE valid=1 $ORDERBY LIMIT $startPage,$perPage";
+$result = $conn->query($sqlPage);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!doctype html>
@@ -103,6 +98,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <aside class="main-aside position-fixed bg-light vh-100 border-end">
         <nav class="">
             <ul class="list-unstyled">
+                <!-- if ($_SESSION['user']['name'] !== 'Joe'): 
+                endif;  用session判斷哪些要讓user看到的寫法! -->
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
@@ -154,76 +151,73 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <main class="main-content ">
         <div class="px-3">
             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                <h1>營地資訊</h1>
+                <h1>Member List</h1>
+                <h6>共 <?= $totalMember ?> 筆，第<?= $page ?> 頁</h6>
             </div>
-            <div class="table-responsive small ">
-                <div class="py-2 d-flex justify-content-between align-items-center">
-                    <a class="btn btn-primary mb-3" href="Camp_Info/add_camp-LIN.php">新增</a>
-                    <div>
-                        共 <?= $totalCamp ?> 個營地, 第 <?= $page ?> 頁
-                    </div>
-                </div>
-                <div class="py-2">
-                    <div class="mx-1 py-2 d-flex justify-content-between">
-                        <form action="Camp_Info/search-LIN.php">
-                            <div class="row gx-2">
-                                <div class="col">
-                                    <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
-                                </div>
-                                <div class="col-auto">
-                                    <button class="btn btn-primary" type="submit">搜尋</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="btn-group">
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=1">id <i class="fa-solid fa-arrow-up"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=2">id <i class="fa-solid fa-arrow-down"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=3">海拔 <i class="fa-solid fa-arrow-up"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=4">海拔 <i class="fa-solid fa-arrow-down"></i></a>
+            <div class="m-3 d-flex justify-content-between">
+                <!-- 搜尋bar -->
+                <form action="Member/do-search-Liao.php">
+                    <div class="row">
+                        <div class="col">
+                            <input class="form-control" type="text" name="name" placeholder="搜尋使用者">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-dark" type="submit">搜尋</button>
                         </div>
                     </div>
+                </form>
+                <!-- 搜尋按鈕 -->
+                <div class="search-btn">
+                    <div class="btn-group me-2">
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=1" class="btn btn-light"><i class="fa-solid fa-arrow-down"></i> id</a>
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=2" class="btn btn-light"><i class="fa-solid fa-arrow-up"></i> id</a>
+                    </div>
+                    <div class="btn-group">
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=3" class="btn btn-light"><i class="fa-solid fa-arrow-down"></i> name</a>
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=4" class="btn btn-light"><i class="fa-solid fa-arrow-up"></i> name</a>
+                    </div>
                 </div>
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>camp_id</th>
-                            <th>營地名稱</th>
-                            <th>營地地址</th>
-                            <th>營主電話</th>
-                            <th>海拔</th>
-                            <th>詳細資訊</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($rows as $row) : ?>
-                            <tr>
-                                <td><?= $row["camp_id"] ?></td>
-                                <td><?= $row["camp_name"] ?></td>
-                                <td><?= $row["camp_address"] ?></td>
-                                <td><?= $row["camp_phone"] ?></td>
-                                <td><?= $row["camp_altitude"] ?> 公尺</td>
-                                <td>
-                                    <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
-                                    
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($i == $page) echo "active";?>">
-                                <a class="page-link " href="camp_info-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
-                            </li>
-                        <?php endfor; ?>
-                    </ul>
-                </nav>
             </div>
+
+
+            <!-- 表格 table -->
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>姓名</th>
+                        <th>帳號（信箱）</th>
+                        <th>電話</th>
+                        <th>居住城市</th>
+                        <th>詳細資訊</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($rows as $member) : ?>
+                        <tr>
+                            <td><?= $member["user_id"] ?></td>
+                            <td><?= $member["user_name"] ?></td>
+                            <td><?= $member["user_email"] ?></td>
+                            <td><?= $member["user_phone"] ?></td>
+                            <td><?= $member["city_name"] ?></td>
+                            <td><a class="btn btn-primary" href="Member/member-detail-Liao.php?id=<?= $member["user_id"] ?>">顯示</a></td>
+
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+
+            <!-- 分頁 -->
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                        <li class="page-item <?php if ($page == $i) echo "active"; ?> "><a class="page-link" href="member_list-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                    <?php endfor; ?>
+                </ul>
+            </nav>
         </div>
-
-
     </main>
 
 

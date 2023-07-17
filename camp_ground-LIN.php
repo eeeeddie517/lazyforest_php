@@ -122,6 +122,12 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                         類別管理
                     </a>
                 </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        會員清單
+                    </a>
+                </li>
             </ul>
             <ul class="list-unstyled">
                 <hr>
