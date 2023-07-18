@@ -1,10 +1,20 @@
 <?php
 
 //搜尋
+require_once("../db_connect.php");
 $name = $_GET["name"];
-if (isset($_GET["name"])) {
+if (empty($name)) {
+
+    $name = null;
+    $sql = "SELECT * FROM db";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+    $user_count = 0;
+}
+
+if (isset($name)) {
     $name = $_GET["name"];
-    require_once("../db_connect.php");
+
     $sql = "SELECT category_id,category_name FROM db WHERE category_name LIKE '%$name%'AND valid=1 ";  //LIKE '%To%' 可用來篩選符合條件的字串(有To的)
 
     $result = $conn->query($sql);
@@ -13,6 +23,8 @@ if (isset($_GET["name"])) {
 } else {
     $user_count = 0;
 }
+
+
 
 
 ?>
@@ -46,14 +58,14 @@ if (isset($_GET["name"])) {
 
             </div>
             <div class="chart">
-                <?php $resultCount = $result->num_rows ?>
+
                 <?php if (isset($_GET["name"])) : ?>
                     <div>
                         搜尋<?= $name ?>的結果,
-                        共有 <?= $resultCount ?> 筆符合的資料
+                        共有 <?= $user_count ?> 筆符合的資料
                     </div>
                 <?php endif ?>
-                <?php if (isset($_GET["name"])) : ?>
+                <?php if ($user_count != 0) : ?>
 
                     <table class="table table-bordered p-3">
                         <!-- <thead>

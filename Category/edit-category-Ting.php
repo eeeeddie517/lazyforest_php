@@ -28,9 +28,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <table class="table table-bordered p-3">
             <thead>
                 <tr>
-                    <th>category_id</th>
-                    <th>category_name</th>
-                    <th>Edit</th>
+                    <th>類別編號</th>
+                    <th>類別名稱</th>
+                    <th>編輯類別</th>
                 </tr>
             </thead>
             <?php foreach ($rows as $name) : ?>

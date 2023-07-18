@@ -190,7 +190,7 @@ $result = $conn->query($sql);
         <div class="container">
             <!-- <?= $totalPage ?> -->
             <div class="py-2">
-                <form action="brand-search.php">
+                <form action="Brand/brand-search.php">
                     <div class="row">
                         <div class="col">
                             <input type="text" class="form-control" placeholder="搜尋商家" name="brand_name">
@@ -203,17 +203,17 @@ $result = $conn->query($sql);
             <?php
             $brand_count = $result->num_rows;
             ?>
-            <div class="py-2 d-flex justify-content-between align-items-center"><a href="brand-create.php" class="btn btn-warning"><i class="fa-solid fa-file-circle-plus"></i>新增</a>
+            <div class="py-2 d-flex justify-content-between align-items-center"><a href="Brand/brand-create.php" class="btn btn-warning"><i class="fa-solid fa-file-circle-plus"></i>新增</a>
                 <div>
                     共 <?= $totalBrand ?> 筆, 第 <?= $page ?> 頁
                 </div>
             </div>
             <div class="py-2 d-flex justify-content-end">
                 <div class="btn-group">
-                    <a href="brand-list.php?page=<?= $page ?>& type=1" class="btn btn-dark <?php if ($type == 1) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                    <a href="brand-list.php?page=<?= $page ?>& type=2" class="btn btn-dark <?php if ($type == 2) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                    <a href="brand-list.php?page=<?= $page ?>& type=3" class="btn btn-dark <?php if ($type == 3) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                    <a href="brand-list.php?page=<?= $page ?>& type=4" class="btn btn-dark <?php if ($type == 4) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=1" class="btn btn-dark <?php if ($type == 1) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=2" class="btn btn-dark <?php if ($type == 2) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=3" class="btn btn-dark <?php if ($type == 3) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                    <a href="brand-LIN.php?page=<?= $page ?>& type=4" class="btn btn-dark <?php if ($type == 4) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-wide-short"></i></a>
                 </div>
             </div>
             <?php
@@ -245,7 +245,7 @@ $result = $conn->query($sql);
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                        <a href="brand-doDelete.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-danger">確認</a>
+                                        <a href="Brand/brand-doDelete.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-danger">確認</a>
                                     </div>
                                 </div>
                             </div>
@@ -253,11 +253,11 @@ $result = $conn->query($sql);
                         <tr>
                             <td><?= $row["brand_id"] ?></td>
                             <td>
-                                <figure><img src="../brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
+                                <figure><img src="Brand/brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
                             </td>
                             <td><?= $row["brand_name"] ?></td>
                             <td><?= $row["brand_intro"] ?></td>
-                            <td class="text-center py-2"><a href="brand.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-warning"><i class="fa-regular fa-eye"></i></a>
+                            <td class="text-center py-2"><a href="Brand/brand.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-warning"><i class="fa-regular fa-eye"></i></a>
                                 <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row["brand_id"] ?>"><i class="fa-regular fa-trash-can"></i></button>
                             </td>
                         </tr>
@@ -269,7 +269,7 @@ $result = $conn->query($sql);
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                         <li class="page-item <?php
                                                 if ($i == $page) echo "active"; ?>
-                "><a class="page-link" href="brand-list.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                "><a class="page-link" href="brand-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
 
                 </ul>

@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="py-2">
-            <a href="../category_list-LIN.php" class="btn btn-info">返回類別清單</a>
+            <a href="category_list-LIN.php" class="btn btn-info">返回類別清單</a>
         </div>
         <form action="doCreate-category-Ting.php" method="post">
 

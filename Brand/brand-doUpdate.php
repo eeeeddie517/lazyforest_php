@@ -1,6 +1,6 @@
 <?php
 
-require_once("../db-connect.php");
+require_once("../db_connect.php");
 
 $brand_id = $_POST["brand_id"];
 
@@ -9,11 +9,11 @@ $brand_intro = $_POST["brand_intro"];
 
 $brand_logo = $_FILES["brand_logo"]["name"];
 $brand_logo_tmp = $_FILES["brand_logo"]["tmp_name"];
-$brand_logo_folder = "../brand_logo/";
+$brand_logo_folder = "brand_logo/";
 
 $brand_img = $_FILES["brand_img"]["name"];
 $brand_img_tmp = $_FILES["brand_img"]["tmp_name"];
-$brand_img_folder = "../brand_img/";
+$brand_img_folder = "brand_img/";
 
 if (!empty($brand_logo_tmp)) {
     move_uploaded_file($brand_logo_tmp, $brand_logo_folder.$brand_logo);

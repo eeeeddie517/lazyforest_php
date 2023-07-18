@@ -5,7 +5,7 @@ if (!isset($_GET["brand_id"])) {
 }
 $brand_id = $_GET["brand_id"];
 
-require_once("../db-connect.php");
+require_once("../db_connect.php");
 $sql = "SELECT * FROM brand_info WHERE brand_id=$brand_id AND valid = 1";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -30,7 +30,7 @@ $original_brand_img = $row["brand_img"];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../all.css">
+    <link rel="stylesheet" href="all.css">
 
     <style>
         .hidden-info {
@@ -60,7 +60,7 @@ $original_brand_img = $row["brand_img"];
     </div>
     <div class="container">
         <div class="py-2 d-flex justify-content-between">
-            <a href="brand-list.php" class="btn btn-warning"><i class="fa-regular fa-circle-left"></i>返回</a>
+            <a href="../brand-LIN.php" class="btn btn-warning"><i class="fa-regular fa-circle-left"></i>返回</a>
             <div class="me-3">
                 <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-regular fa-trash-can"></i></button>
                 <button class="btn btn-warning" id="editButton"><i class="fa-regular fa-pen-to-square"></i></button>
@@ -83,14 +83,14 @@ $original_brand_img = $row["brand_img"];
                 <tr>
                     <th>品牌logo</th>
                     <td>
-                        <figure style="width: 200px"><img src="../brand_logo/<?= $original_brand_logo ?>" alt="" class="object-fit-cover"></figure>
+                        <figure style="width: 200px"><img src="brand_logo/<?= $original_brand_logo ?>" alt="" class="object-fit-cover"></figure>
                     </td>
                 </tr>
                 <tr>
                     <th>品牌相關照片</th>
                     <td><?php if (!empty($row["brand_img"])) : ?>
                             <figure style="width: 400px">
-                                <img src="../brand_img/<?= $original_brand_img ?>" alt="" class="object-fit-cover">
+                                <img src="brand_img/<?= $original_brand_img ?>" alt="" class="object-fit-cover">
                             </figure>
                         <?php else : ?>
                             <i class="fa-regular fa-image"></i>尚未上傳圖片
@@ -134,7 +134,7 @@ $original_brand_img = $row["brand_img"];
 
 
         <!-- JS -->
-        <?php include("../js.php") ?>
+        <?php include("js.php") ?>
 
         <script>
             $(document).ready(function() {

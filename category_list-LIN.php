@@ -6,6 +6,7 @@ require_once("db_connect.php");
 if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
     echo "請依正常管道登入";
 }
+
 $sql = "SELECT * FROM db";
 
 $result = $conn->query($sql);
@@ -25,18 +26,18 @@ $totalCategory = $resultTotal->num_rows;
 
 $perPage = 5;
 $startItem = ($page - 1) * $perPage;
-$totalPage = ceil($totalCategory / $perPage);
+// $totalPage = ceil($totalCategory / $perPage);
 
 if ($type == 1) {
-    $orderBy = "ORDER BY category_id ASC";
+  $orderBy = "ORDER BY category_id ASC";
 } elseif ($type == 2) {
-    $orderBy = "ORDER BY category_id DESC";
+  $orderBy = "ORDER BY category_id DESC";
 } elseif ($type == 3) {
-    $orderBy = "ORDER BY category_name ASC";
+  $orderBy = "ORDER BY category_name ASC";
 } elseif ($type == 4) {
-    $orderBy = "ORDER BY category_name DESC";
+  $orderBy = "ORDER BY category_name DESC";
 } else {
-    header("location: 404.php");
+  header("location: 404.php");
 }
 
 
@@ -52,7 +53,7 @@ if ($type == 1) {
 
 
 //計算總共頁數
-$tatalPage = ceil($totalcategory / $perPage);
+$tatalPage = ceil($totalCategory / $perPage);
 $sqlseq = "SELECT * FROM db WHERE valid=1 $orderBy LIMIT $startItem,$perPage";
 $resultseq = $conn->query($sqlseq);
 $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);

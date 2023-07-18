@@ -3,8 +3,8 @@
 $servername = "localhost";
 $username = "admin";
 $password = "12345";
-// $dbname = "project_db";
-$dbname = "my_test_db"; //LIN
+$dbname = "project_db";
+// $dbname = "my_test_db"; //LIN
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 // 檢查連線

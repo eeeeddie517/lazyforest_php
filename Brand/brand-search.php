@@ -3,7 +3,7 @@
 if (isset($_GET["brand_name"])) {
 
     $brand_name = $_GET["brand_name"];
-    require_once("../db-connect.php");
+    require_once("../db_connect.php");
 
     $sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE brand_name LIKE '%$brand_name%' AND valid = 1";
     $result = $conn->query($sql);
@@ -31,14 +31,14 @@ if (isset($_GET["brand_name"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../all.css">
+    <link rel="stylesheet" href="all.css">
 
 </head>
 
 <body>
     <div class="container">
         <div class="py-2">
-            <a href="brand-list.php" class="btn btn-warning"><i class="fa-regular fa-circle-left"></i>返回
+            <a href="../brand-LIN.php" class="btn btn-warning"><i class="fa-regular fa-circle-left"></i>返回
             </a>
         </div>
         <div class="py-2">
@@ -93,7 +93,7 @@ if (isset($_GET["brand_name"])) {
                         <tr>
                             <td><?= $row["brand_id"] ?></td>
                             <td>
-                                <figure><img src="../brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
+                                <figure><img src="brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
                             </td>
                             <td><?= $row["brand_name"] ?></td>
                             <td><?= $row["brand_intro"] ?></td>
@@ -108,7 +108,7 @@ if (isset($_GET["brand_name"])) {
     </div>
 
       <!-- JS -->
-      <?php include("../js.php") ?>
+      <?php include("js.php") ?>
 </body>
 
 </html>

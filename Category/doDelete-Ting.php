@@ -1,8 +1,8 @@
 <?php
 require_once("../db_connect.php");
-if (!isset($_GET["id"])) {
-    die("無法作業");
-}
+// if (!isset($_GET["id"])) {
+//     die("無法作業");
+// }
 
 $id = $_GET["id"];
 echo $id;

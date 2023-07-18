@@ -10,12 +10,18 @@ require_once("../db_connect.php");
 $name = $_POST["name"];
 $sql = "INSERT INTO db (category_name,valid)
 VALUES ('$name',1) ";
+$sqlname = "SELECT * FROM db WHERE category_name = '$name' ";
+$result = $conn->query($sqlname);
 
-if ($conn->query($sql) === TRUE) {
+if ($result->num_rows > 0) {
+    echo "該種類已存在，請不要重複新增。";
+} elseif ($conn->query($sql) === TRUE) {
 
     // echo "新增類別成功";
-    header("location: ../category_list-LIN.php");
+    header("location:../category_list-LIN.php");
 } else {
     echo "新增類別錯誤: " . $conn->error;
 }
+
+
 $conn->close();
