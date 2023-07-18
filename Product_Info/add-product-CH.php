@@ -10,7 +10,7 @@ $product_serial = $_POST["product_serial"];
 $product_amount = $_POST["product_amount"];
 $product_img = $_FILES["product_img"];
 $now = date('Y-m-d H:i:s');
-
+var_dump($product_name);
 
 if($product_img["error"]==0) {
     if(move_uploaded_file($_FILES["product_img"]["tmp_name"], "images-CH/".$_FILES["product_img"]["name"])){

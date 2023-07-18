@@ -4,7 +4,8 @@ require_once("db_connect.php");
 
 
 if (!isset($_SESSION["user"])) {
-    header("location: Member/member-signIn-Liao.php");
+    // header("location: Member/member-signIn-Liao.php");
+    echo "請依正常管道登入";
 }
 
 $page = $_GET["page"] ?? 1;

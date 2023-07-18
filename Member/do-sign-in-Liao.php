@@ -35,9 +35,9 @@ if($memberCount===0){
 }else{
     //成功
     unset($_SESSION["error"]);
-    $_SESSION["user"]=$member;
-    // header("location:index-Liao.php");
-    header("location: ../camp_home-LIN.php");
+    $_SESSION["member"]=$member;
+    header("location:index-Liao.php");
+    // header("location: ../camp_home-LIN.php");
 }
 
 

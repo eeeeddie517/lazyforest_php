@@ -207,14 +207,6 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <!-- <div class="d-flex p-3 ">
-                                <label for="">商品編號</label>
-                                <input class="ms-3" type="text" id="product_id">
-                            </div> -->
-                                <!-- <div class="d-flex p-3">
-                                <label for="">品牌名稱</label>
-                                <input class="ms-3" type="text" id="brand_id">
-                            </div> -->
                                 <div class="d-flex p-3 justify-content-between align-items-center">
                                     <label for="">商品名稱</label>
                                     <input class="ms-4 form-control" type="text" id="product_name" style="width: 330px;">
@@ -323,7 +315,6 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
         </div>
     </main>
     <script>
-    
         // 新增
         let add_product = document.getElementById("add-product")
         let product_name = document.getElementById("product_name")
@@ -335,7 +326,6 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
         let product_img = document.getElementById("product_img")
 
         add_product.addEventListener("click", function() {
-            alert("test");
             let formData = new FormData();
             formData.append("product_img", product_img.files[0]);
             formData.append("product_name", product_name.value);
@@ -366,28 +356,27 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
         //刪除
         var delete_btn = document.getElementById("delete_btn");
         var product_id = document.getElementById("product_id").innerText;
- 
+
         delete_btn.addEventListener("click", function() {
-            
-                    $.ajax({
-                        method: "POST",
-                        url: "http://localhost/lazyforest/Product_Info/add-product-CH.php",
-                        dataType: "json",
-                        data: {
-                            id: product_id,
-                            valid: "0",
-                        },
-                        success: function(data) {
-                            if (data.success) {
-                                
-                                location.reload(true);
-                            } else {
 
-                            }
-                        },
-                })
+            $.ajax({
+                method: "POST",
+                url: "http://localhost/lazyforest/Product_Info/add-product-CH.php",
+                dataType: "json",
+                data: {
+                    id: product_id,
+                    valid: "0",
+                },
+                success: function(data) {
+                    if (data.success) {
+
+                        location.reload(true);
+                    } else {
+
+                    }
+                },
             })
-
+        })
     </script>
 
 
@@ -402,6 +391,8 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous">
     </script>
 </body>
 
