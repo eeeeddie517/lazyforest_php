@@ -92,7 +92,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
             <div class="me-3">
-                Hi, <?= $_SESSION["user"]["name"] ?>
+                Hi, <?= $_SESSION["user"]["user_name"] ?>
             </div>
             <a href="logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -143,6 +143,18 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         商品資訊
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營主名單
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        品牌名單
                     </a>
                 </li>
             </ul>

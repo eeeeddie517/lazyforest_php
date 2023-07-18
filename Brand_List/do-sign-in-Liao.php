@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require_once("../db_connect.php");
 
 
@@ -12,9 +11,10 @@ $account=$_POST["account"];
 $password=$_POST["password"];
 $password=md5($password);
 
-$sql="SELECT * FROM member_list WHERE user_email='$account' AND user_password='$password'";
+
+$sql="SELECT * FROM brand WHERE brand_email='$account' AND brand_password='$password'";
 $result=$conn->query($sql);
-$member=$result->fetch_assoc() ;
+$brand=$result->fetch_assoc() ;
 
 $memberCount=$result->num_rows;
 
@@ -30,14 +30,13 @@ if($memberCount===0){
 
     echo $_SESSION["error"]["times"];
  
-    header("location: member-signIn-Liao.php");
+    header("location: brand-signIn-Liao.php");
 
 }else{
     //成功
     unset($_SESSION["error"]);
-    $_SESSION["user"]=$member;
-    // header("location:index-Liao.php");
-    header("location: ../camp_home-LIN.php");
+    $_SESSION["brand"]=$brand;
+    header("location:../camp_home-LIN.php");
 }
 
 

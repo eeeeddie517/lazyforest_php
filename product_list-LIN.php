@@ -161,6 +161,18 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                         商品資訊
                     </a>
                 </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營主名單
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        品牌名單
+                    </a>
+                </li>
             </ul>
             <ul class="list-unstyled">
                 <hr>
