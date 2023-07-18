@@ -3,8 +3,8 @@ session_start();
 require_once("db_connect.php");
 
 
-if (!isset($_SESSION["user"])) {
-    header("location: sign-in.php");
+if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
+    echo "請依正常管道登入";
 }
 
 $page = $_GET["page"] ?? 1;
@@ -92,7 +92,16 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
             <div class="me-3">
-                Hi, <?= $_SESSION["user"]["user_name"] ?>
+                Hi, 
+                <?php
+                if (isset($_SESSION["admin"])) {
+                    echo $_SESSION["admin"]["name"];
+                } elseif (isset($_SESSION["camp"])) {
+                    echo $_SESSION["camp"]["camp_hostName"];
+                } elseif (isset($_SESSION["brand"])) {
+                    echo $_SESSION["brand"]["brand_hostName"];
+                }
+                ?>
             </div>
             <a href="logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>

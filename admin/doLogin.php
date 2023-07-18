@@ -44,10 +44,10 @@ if($userCount===0){//登入失敗
     // echo $userCount."<br>";
     unset($_SESSION["error"]);
     // 確認登入成功，把error刪掉
-    $_SESSION["user"]=$user;
+    $_SESSION["admin"]=$user;
     //把user存進去
 
-    header("location: dashboard.php");
+    header("location: ../camp_home-LIN.php");
     //登入成功導到目標網站
 
 }

@@ -1,5 +1,5 @@
 <?php
-require_once("../db-connect_.php");
+require_once("../db_connect.php");
 
 $id = $_POST["id"];
 $valid = $_POST["valid"];

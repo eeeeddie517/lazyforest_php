@@ -20,16 +20,19 @@
 
 <body>
     <div class="container">
+        <div class="py-4">
+            <a href='javascript:window.history.back();' class="btn btn-warning"><i class="fa-regular fa-circle-left"></i>返回</a>
+        </div>
         <div class="row justify-content-center mt-4">
             <div class="col-lg-10">
                 <div class="row">
-                    <div class="col-lg-6 mt-5">
+                    <div class="col-lg-6 mt-2">
                         <figure>
                             <img src="https://i.pinimg.com/564x/48/36/e6/4836e649af2a8e30a50f2e3c5d4d5bbf.jpg" alt="" class="img-fluid rounded-5">
                         </figure>
                     </div>
-                    <div class="col-lg-6 mt-5">
-                        <form action="brand-doCreate.php" method="post" enctype="multipart/form-data">
+                    <div class="col-lg-6 mt-2">
+                        <form action="brand-doCreate.php" method="POST" enctype="multipart/form-data">
                             <label for="brand_name">品牌名稱：</label>
                             <input class="form-control" type="text" name="brand_name" id="brand_name" required>
                             <br>
@@ -45,7 +48,8 @@
                             <label for="brand_img">品牌相關圖片：</label>
                             <input class="form-control" type="file" name="brand_img" id="brand_img">
                             <br>
-                            
+
+
                             <button class="btn btn-warning" type="submit">
                                 提交
                             </button>
@@ -58,7 +62,7 @@
 
 
         <!-- JS -->
-        <?php include("../js.php") ?>
+        <?php include("js.php") ?>
 </body>
 
 </html>

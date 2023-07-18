@@ -12,8 +12,7 @@
 
     $.ajax({
       method: "POST",
-      url: "/lazyforest/Product_Info/add-product-CH.php",
-      // url: "/small-project/product-list-CH/add-product-CH.php",
+      url: "/laztforest/Product_Info/add-product-CH.php",
       dataType: "json",
       data: {
         product_img: product_img.value,

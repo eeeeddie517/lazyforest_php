@@ -3,13 +3,14 @@ session_start();
 require_once("db_connect.php");
 
 
-if (!isset($_SESSION["user"])) {
-    header("location: ../admin/sign-in.php");
+if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
+    echo "請依正常管道登入";
 }
+
 
 $page = $_GET["page"] ?? 1;
 
-$type = $_GET["type"] ?? 1;
+$type = $_GET["type"] ?? 2;
 
 $sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1";
 $resultTotal = $conn->query($sqlTotal);
@@ -91,7 +92,16 @@ $result = $conn->query($sql);
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
             <div class="me-3">
-                Hi, <?= $_SESSION["user"]["user_name"] ?>
+                Hi,
+                <?php
+                if (isset($_SESSION["admin"])) {
+                    echo $_SESSION["admin"]["name"];
+                } elseif (isset($_SESSION["camp"])) {
+                    echo $_SESSION["camp"]["camp_hostName"];
+                } elseif (isset($_SESSION["brand"])) {
+                    echo $_SESSION["brand"]["brand_hostName"];
+                }
+                ?>
             </div>
             <a href="logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -180,12 +190,12 @@ $result = $conn->query($sql);
         <div class="container">
             <!-- <?= $totalPage ?> -->
             <div class="py-2">
-                <form action="Brand/brand-search.php">
+                <form action="brand-search.php">
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="搜尋商家" name="name">
+                            <input type="text" class="form-control" placeholder="搜尋商家" name="brand_name">
                         </div>
-                        <div class="col-auto"><button class="btn btn-warning" type="submit">搜尋</button>
+                        <div class="col-auto"><button class="btn btn-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
                 </form>
@@ -193,17 +203,17 @@ $result = $conn->query($sql);
             <?php
             $brand_count = $result->num_rows;
             ?>
-            <div class="py-2 d-flex justify-content-between align-items-center"><a href="Brand/brand-create.php" class="btn btn-warning">新增</a>
+            <div class="py-2 d-flex justify-content-between align-items-center"><a href="brand-create.php" class="btn btn-warning"><i class="fa-solid fa-file-circle-plus"></i>新增</a>
                 <div>
                     共 <?= $totalBrand ?> 筆, 第 <?= $page ?> 頁
                 </div>
             </div>
             <div class="py-2 d-flex justify-content-end">
                 <div class="btn-group">
-                    <a href="brand-LIN.php?page=<?= $page ?>& type=1" class="btn btn-dark <?php if ($type == 1) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                    <a href="brand-LIN.php?page=<?= $page ?>& type=2" class="btn btn-dark <?php if ($type == 2) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
-                    <a href="brand-LIN.php?page=<?= $page ?>& type=3" class="btn btn-dark <?php if ($type == 3) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-short-wide"></i></a>
-                    <a href="brand-LIN.php?page=<?= $page ?>& type=4" class="btn btn-dark <?php if ($type == 4) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                    <a href="brand-list.php?page=<?= $page ?>& type=1" class="btn btn-dark <?php if ($type == 1) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                    <a href="brand-list.php?page=<?= $page ?>& type=2" class="btn btn-dark <?php if ($type == 2) echo "active"; ?>">ID<i class="fa-solid fa-arrow-down-wide-short"></i></a>
+                    <a href="brand-list.php?page=<?= $page ?>& type=3" class="btn btn-dark <?php if ($type == 3) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                    <a href="brand-list.php?page=<?= $page ?>& type=4" class="btn btn-dark <?php if ($type == 4) echo "active"; ?>">NAME<i class="fa-solid fa-arrow-down-wide-short"></i></a>
                 </div>
             </div>
             <?php
@@ -223,14 +233,33 @@ $result = $conn->query($sql);
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $row) : ?>
+                        <div class="modal fade" id="deleteModal<?= $row["brand_id"] ?>" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="">警告</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        確認刪除"<?= $row["brand_name"] ?>"?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                        <a href="brand-doDelete.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-danger">確認</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <tr>
                             <td><?= $row["brand_id"] ?></td>
                             <td>
-                                <figure><img src="Brand/brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
+                                <figure><img src="../brand_logo/<?= $row["brand_logo"] ?>" alt="" class="object-fit-cover"></figure>
                             </td>
                             <td><?= $row["brand_name"] ?></td>
                             <td><?= $row["brand_intro"] ?></td>
-                            <td class="text-center"><a href="Brand/brand.php?id=<?= $row["brand_id"] ?>" class="btn btn-warning">檢視</a></td>
+                            <td class="text-center py-2"><a href="brand.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-warning"><i class="fa-regular fa-eye"></i></a>
+                                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row["brand_id"] ?>"><i class="fa-regular fa-trash-can"></i></button>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -240,16 +269,15 @@ $result = $conn->query($sql);
                     <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                         <li class="page-item <?php
                                                 if ($i == $page) echo "active"; ?>
-                "><a class="page-link" href="brand-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+                "><a class="page-link" href="brand-list.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                     <?php endfor; ?>
-                    <!-- <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=2">2</a></li>
-                <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=3">3</a></li>
-                <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=4">4</a></li> -->
+
                 </ul>
             </nav>
         </div>
     </main>
-
+    <!-- JS -->
+    <?php include("Brand/js.php") ?>
 
 
 

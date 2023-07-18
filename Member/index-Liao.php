@@ -16,6 +16,10 @@
     <div class="d-flex justify-content-center">
         <h1 class="display-1">HOME PAGE</h1>
     </div>
+    <a href="../logout.php" class="btn btn-dark me-3">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+    </a>
     <div class="d-flex justify-content-center">
         <img src="https://64.media.tumblr.com/9a38815367163c492c74c7e903e0f76b/tumblr_lvmckgdi7o1r77xy0o2_r1_1280.jpg" alt="">
     </div>

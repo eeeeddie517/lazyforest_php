@@ -1,28 +1,41 @@
 <?php
 
-require_once("../db_connect.php");
+require_once("../db-connect-CH.php");
 
 $page = $_GET["page"] ?? 1;
+$type = $_GET["type"] ?? 1;
 
-$sqlTotal = "SELECT id FROM product_info WHERE valid = 1 ORDER BY id desc";
+// 排序方式
+if ($type == 1) {
+    $orderBy = "ORDER BY id ASC";
+} elseif ($type == 2) {
+    $orderBy = "ORDER BY id DESC";
+} elseif ($type == 3) {
+    $orderBy = "ORDER BY product_price ASC";
+} elseif ($type == 4)  {
+    $orderBy = "ORDER BY product_price DESC";
+}else{
+    header("location: ../404.php");
+}
 
-// pagination
+$sqlTotal = "SELECT id FROM product_info WHERE valid = 1 $orderBy";
+
+// 分頁
 $perPage = 5;
 $startItem = ($page - 1) * $perPage;
 
+$sql = "SELECT * FROM product_info WHERE valid = 1 $orderBy LIMIT $startItem, $perPage";
 
-$sql = "SELECT * FROM product_info WHERE valid = 1 ORDER BY id desc LIMIT $startItem, $perPage";
-
-//撈出所有的資料去找到總共有幾頁 跟總共有幾筆
+// 獲取總品數
 $resultTotal = $conn->query($sqlTotal);
 $totalProduct = $resultTotal->num_rows;
 $totalPage = ceil($totalProduct / $perPage);
 
-// 顯示每頁的地方
+// 獲取當前頁面的商品
 $result = $conn->query($sql);
 $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
-
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -34,6 +47,9 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
 
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .product-edit {
             font-size: 30px;
@@ -117,7 +133,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                                 <input class="ms-5 form-control" type="text" id="product_amount" style="width: 330px;">
                             </div>
                             <div class="d-flex p-3 justify-content-between align-items-center">
-                                <label for="">訂單編號</label>
+                                <label for="">商品編號</label>
                                 <input class="ms-3 form-control" type="text" id="product_serial" style="width: 330px;">
                             </div>
                             <div class="d-flex p-3 justify-content-between align-items-center">
@@ -133,8 +149,28 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             </div>
         </div>
+        <div class="py-3 d-flex justify-content-end">
+            <div class="btn-group">
+                <a href="product-list-CH.php?page=<?= $page ?>&type=1" class="btn btn-dark <?php if($type==1)echo "active";?>">
+                id
+                    <i class="fa-solid fa-sort-up"></i>
+                </a> 
+                 <a href="product-list-CH.php?page=<?= $page ?>&type=2" class="btn btn-dark <?php if($type==2)echo "active";?>">
+                 id
+                    <i class="fa-solid fa-sort-down"></i>
+                </a>
+                <a href="product-list-CH.php?page=<?= $page ?>&type=3" class="btn btn-dark <?php if($type==3)echo "active";?>">
+                價格
+                    <i class="fa-solid fa-sort-up"></i>
+                </a>
+                <a href="product-list-CH.php?page=<?= $page ?>&type=4" class="btn btn-dark <?php if($type==4)echo "active";?>">
+                價格
+                    <i class="fa-solid fa-sort-down"></i>
+                </a>
+            </div>
+        </div>
         <!-- table -->
-        <table class="table table-bordered">
+        <table class="table table-bordered justify-content-center">
             <thead class="table-dark w-100">
                 <tr>
                     <td>編號</td>
@@ -157,7 +193,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                         <td style="width: 150px; height: 50px;">
                             <img class="object-fit-cover w-100" src="../images-CH/<?= $products["product_img"] ?> " alt="">
                         </td>
-                        <td><?= $products["product_price"] ?></td>
+                        <td><?= "NT$".$products["product_price"] ?></td>
                         <td><?= $products["product_amount"] ?></td>
                         <td><?= $products["updated_at"] ?></td>
                         <td>
@@ -168,7 +204,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title"></h5>
+                                                <h5 class="modal-title">提醒</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -187,12 +223,14 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                 <?php endforeach; ?>
             </tbody>
         </table>
-
+        <div class="py-2 ">
+             共<?=$totalProduct?> 件商品,第 <?= $page?> 頁
+        </div>
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center p-5">
                 <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                     <li class="page-item <?php if ($i == $page) echo "active"; ?>">
-                        <a class="page-link" href="product-list-CH.php?page=<?= $i ?>"><?= $i ?></a>
+                        <a class="page-link" href="product-list-CH.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
             </ul>
@@ -258,7 +296,6 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                                 
                                 location.reload(true);
                             } else {
-
                             }
                         },
                 })
@@ -267,12 +304,12 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
     </script>
-    <!-- bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous">
     </script>
+   <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
 
     </script>

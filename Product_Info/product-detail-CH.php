@@ -48,7 +48,7 @@ $row = $result->fetch_assoc();
           <th>圖片</th>
           <td style=" height: 100px;" class="selected_fields">
             <div id="product_img"></div>
-            <img class="object-fit-cover h-100" src="../images-CH/<?= $row["product_img"] ?> " alt="">
+            <img class="object-fit-cover h-100" src="images-CH/<?= $row["product_img"] ?> " alt="">
           </td>
         </tr>
         <tr>
@@ -72,7 +72,7 @@ $row = $result->fetch_assoc();
           <td class="selected_fields" id="product_amount"><?= $row["product_amount"] ?></td>
         </tr>
         <tr>
-          <th>訂單編號</th>
+          <th>商品編號</th>
           <td><?= $row["product_serial"] ?></td>
         </tr>
         <tr>
@@ -95,7 +95,6 @@ $row = $result->fetch_assoc();
   <script>
     let edit_product = document.getElementById("edit_product")
     let save_product = document.getElementById("save_product")
-
     var product_name_orig = document.getElementById("product_name")
     var product_introduce_orig = document.getElementById("product_introduce")
     var product_spec_orig = document.getElementById("product_spec")
@@ -113,7 +112,7 @@ $row = $result->fetch_assoc();
       product_amount_orig.innerHTML = `<input placeholder="${product_amount_orig.innerText}" class="form-control" type="text" id="input_product_amount" value="">`;
       product_img_orig.innerHTML = `<input class="form-control" type="file" id="input_product_img" value="">`
     })
-    
+
     //存取
     save_product.addEventListener("click", function() {
 
@@ -164,10 +163,9 @@ $row = $result->fetch_assoc();
 
       formData.append("id", <?= $id ?>);
 
-
       $.ajax({
         method: "POST",
-        url: "/lazyforest/Product_Info/update-product-CH.php",
+        url: "http://localhost/lazyforest/Product_Info/update-product-CH.php",
         dataType: "json",
         data: formData,
         processData: false,
@@ -176,7 +174,7 @@ $row = $result->fetch_assoc();
           console.log(response)
           alert("修改資料完成, 商品編號: " + response.id);
 
-          location.reload(true); // 从服务器强制重新加载当前页面
+          location.reload(true); // 從服務器強制重新加載當前頁面
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -186,8 +184,6 @@ $row = $result->fetch_assoc();
       })
 
     })
-
-
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
   </script>

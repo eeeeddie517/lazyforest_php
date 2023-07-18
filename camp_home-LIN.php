@@ -3,10 +3,20 @@ session_start();
 require_once("db_connect.php");
 
 
-if (!isset($_SESSION["user"])) {
-    // header("location: Member/member-signIn-Liao.php");
+if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
     echo "請依正常管道登入";
 }
+// } elseif (isset($_SESSION["admin"])) {
+//     header("location: admin/sign-in.php");
+// } elseif (isset($_SESSION["member"])) {
+//     header("location: Member/member-signIn-Liao.php");
+// } elseif (isset($_SESSION["camp"])) {
+//     header("location: CampHost_List/camp-signIn-Liao.php");
+// } elseif (isset($_SESSION["brand"])) {
+//     header("location: Brand_List/brand-signIn-Liao.php");
+// }
+
+
 
 $page = $_GET["page"] ?? 1;
 
@@ -36,7 +46,7 @@ if ($type == 1) {
 }
 
 $sql =
-"SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude
+    "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude
  FROM camp_info
  WHERE valid = 1
  $orderBy 
@@ -92,8 +102,19 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <header class="text-bg-dark d-flex shadow fixed-top justify-content-between align-items-center">
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
-            <div class="me-3">
-                Hi, <?= $_SESSION["user"]["user_name"] ?>
+            <div class="me-3"> 
+            <!-- $_SESSION["user"]["user_name"]  -->
+                Hi,  
+                <?php
+                if (isset($_SESSION["admin"])) {
+                    echo $_SESSION["admin"]["name"];
+                } elseif (isset($_SESSION["camp"])) {
+                    echo $_SESSION["camp"]["camp_hostName"];
+                } elseif (isset($_SESSION["brand"])) {
+                    echo $_SESSION["brand"]["brand_hostName"];
+                }
+                ?>
+
             </div>
             <a href="logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -109,14 +130,14 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <?php if (!isset($_SESSION["user"])) {
                 ?>
                 <?php
-                }?>
+                } ?>
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                         Dashboard
                     </a>
                 </li>
-                
+
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
@@ -246,7 +267,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($i == $page) echo "active";?>">
+                            <li class="page-item <?php if ($i == $page) echo "active"; ?>">
                                 <a class="page-link " href="camp_info.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>

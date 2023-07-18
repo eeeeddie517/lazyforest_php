@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-if(isset($_SESSION["user"])){
-    header("location: dashboard.php");
+if(isset($_SESSION["admin"])){
+    header("location: ../camp_home-LIN.php");
 }
-
 
 ?>
 
@@ -41,23 +40,13 @@ if(isset($_SESSION["user"])){
             border-bottom-right-radius: 0;
             border-bottom: 0;
         }
-
         .input-area .form-floating:last-child .form-control {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
-
         .input-area .form-control:focus {
             z-index: 1;
         }
-
-        /*  form-floating>label
-            form-floating 以下的子元素
-            「>」只會影響到直接的子元素
-            box 底下有 1234  2、4是P元素
-            .box>p 只為影響2、4
-            如果用.box p 會影響1、2、3、4  */
-
         .form-floating>label {
             z-index: 5;
         }

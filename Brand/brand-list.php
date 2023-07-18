@@ -2,10 +2,10 @@
 
 $page = $_GET["page"] ?? 1;
 
-$type = $_GET["type"] ?? 1;
+$type = $_GET["type"] ?? 2;
 
 
-require_once("../db_connect.php");
+require_once("../db-connect.php");
 
 $sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1";
 $resultTotal = $conn->query($sqlTotal);
@@ -65,9 +65,9 @@ $result = $conn->query($sql);
             <form action="brand-search.php">
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="搜尋商家" name="name">
+                        <input type="text" class="form-control" placeholder="搜尋商家" name="brand_name">
                     </div>
-                    <div class="col-auto"><button class="btn btn-warning" type="submit">搜尋</button>
+                    <div class="col-auto"><button class="btn btn-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
             </form>
@@ -75,7 +75,7 @@ $result = $conn->query($sql);
         <?php
         $brand_count = $result->num_rows;
         ?>
-        <div class="py-2 d-flex justify-content-between align-items-center"><a href="brand-create.php" class="btn btn-warning">新增</a>
+        <div class="py-2 d-flex justify-content-between align-items-center"><a href="brand-create.php" class="btn btn-warning"><i class="fa-solid fa-file-circle-plus"></i>新增</a>
             <div>
                 共 <?= $totalBrand ?> 筆, 第 <?= $page ?> 頁
             </div>
@@ -105,6 +105,23 @@ $result = $conn->query($sql);
             </thead>
             <tbody>
                 <?php foreach ($rows as $row) : ?>
+                    <div class="modal fade" id="deleteModal<?= $row["brand_id"] ?>" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="">警告</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    確認刪除"<?= $row["brand_name"]?>"?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                    <a href="brand-doDelete.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-danger">確認</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <tr>
                         <td><?= $row["brand_id"] ?></td>
                         <td>
@@ -112,7 +129,9 @@ $result = $conn->query($sql);
                         </td>
                         <td><?= $row["brand_name"] ?></td>
                         <td><?= $row["brand_intro"] ?></td>
-                        <td class="text-center"><a href="brand.php?id=<?= $row["brand_id"] ?>" class="btn btn-warning">檢視</a></td>
+                        <td class="text-center py-2"><a href="brand.php?brand_id=<?= $row["brand_id"] ?>" class="btn btn-warning"><i class="fa-regular fa-eye"></i></a>
+                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row["brand_id"] ?>"><i class="fa-regular fa-trash-can"></i></button>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -124,18 +143,12 @@ $result = $conn->query($sql);
                                             if ($i == $page) echo "active"; ?>
                 "><a class="page-link" href="brand-list.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
                 <?php endfor; ?>
-                <!-- <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=2">2</a></li>
-                <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=3">3</a></li>
-                <li class="page-item"><a class="page-link link-secondary" href="user-list.php?page=4">4</a></li> -->
+
             </ul>
         </nav>
     </div>
-    <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-    </script>
+    <!-- JS -->
+    <?php include("../js.php") ?>
 </body>
 
 </html>
