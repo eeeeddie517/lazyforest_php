@@ -1,14 +1,13 @@
 <?php
 require_once("db_connect-Ting.php");
-// if (!isset($_GET["id"])) {
-//     die("無法作業");
-// }
+if (!isset($_GET["category_id"])) {
+    die("無法作業");
+}
+$id = $_GET["category_id"];
+// echo $id;
+$sql = "UPDATE db SET valid=1   WHERE category_id='$id'  ";
 
-$id = $_GET["id"];
-echo $id;
 
-
-$sql = "UPDATE db SET valid=0 WHERE category_id='$id'";
 
 if ($conn->query($sql) === TRUE) {
     header("location:category-list-Ting.php");

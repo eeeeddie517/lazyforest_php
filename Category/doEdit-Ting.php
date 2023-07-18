@@ -1,8 +1,8 @@
 <?php
-// if (!isset($_POST["name"])) {
-//     die("請依正常管道進入");
-// }
-require_once("../db_connect.php");
+if (!isset($_POST["updateName"])) {
+    die("請依正常管道進入");
+}
+require_once("db_connect-Ting.php");
 $name = $_POST["updateName"];
 $id = $_POST["id"];
 // echo $name;
@@ -14,7 +14,7 @@ $sql = "UPDATE db SET category_name='$name' WHERE category_id='$id' ";
 if ($conn->query($sql) === TRUE) {
 
     // echo "新增類別成功";
-    header("location: ../category_list-LIN.php");
+    header("location:category-list-Ting.php");
 } else {
     echo "新增類別錯誤: " . $conn->error;
 }

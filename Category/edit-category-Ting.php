@@ -1,5 +1,5 @@
 <?php
-require_once("../db_connect.php");
+require_once("db_connect-Ting.php");
 
 $id = $_GET["id"];
 $sql = "SELECT * FROM db ";
@@ -28,9 +28,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <table class="table table-bordered p-3">
             <thead>
                 <tr>
-                    <th>category_id</th>
-                    <th>category_name</th>
-                    <th>Edit</th>
+                    <th>類別編號</th>
+                    <th>類別名稱</th>
+                    <th>編輯類別</th>
                 </tr>
             </thead>
             <?php foreach ($rows as $name) : ?>
@@ -44,7 +44,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 <td><input type="text" class="form-control" value="<?= $name["category_name"] ?>" name="updateName"></td>
                                 <td>
                                     <button class="btn btn-success" type="submit">確認編輯</button>
-                                    <a href="../category_list-LIN.php" class="btn btn-danger">取消變更</a>
+                                    <a href="category-list-Ting.php" class="btn btn-danger">取消變更</a>
                                 </td>
                             </form>
                         <?php else : ?>

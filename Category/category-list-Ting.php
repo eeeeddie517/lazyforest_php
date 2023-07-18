@@ -1,5 +1,5 @@
 <?php
-require_once("../db_connect.php");
+require_once("db_connect-Ting.php");
 $sql = "SELECT * FROM db";
 
 $result = $conn->query($sql);
@@ -19,7 +19,7 @@ $totalCategory = $resultTotal->num_rows;
 
 $perPage = 5;
 $startItem = ($page - 1) * $perPage;
-$totalPage = ceil($totalCategory / $perPage);
+// $totalPage = ceil($totalCategory / $perPage);
 
 if ($type == 1) {
   $orderBy = "ORDER BY category_id ASC";
@@ -46,7 +46,7 @@ if ($type == 1) {
 
 
 //計算總共頁數
-$tatalPage = ceil($totalcategory / $perPage);
+$tatalPage = ceil($totalCategory / $perPage);
 $sqlseq = "SELECT * FROM db WHERE valid=1 $orderBy LIMIT $startItem,$perPage";
 $resultseq = $conn->query($sqlseq);
 $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
@@ -93,28 +93,6 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="deleteModalLabel">訊息</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          確定刪除?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-          <?php foreach ($resultseq as $name) : ?>
-            <?php $id = $name["category_id"]; ?>
-          <?php endforeach ?>
-          <a href="doDelete-Ting.php?id=<?= $id ?>" class="btn btn-danger">確定</a>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
 
   <header class="text-bg-dark d-flex shadow fixed-top justify-content-between align-items-center">
     <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="">Company Name</a>
@@ -210,8 +188,9 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
             <input type="text" class="col-6 form-control" placeholder="搜尋類別" name="name">
             <button class="btn btn-info col-3 mx-1" type="submit">搜尋</button>
           </div>
-        </form>
 
+        </form>
+        <a href="hidden-Ting.php" class="btn btn-warning  mx-3">已隱藏清單</a>
       </div>
       <div class="d-flex align-items-end justify-content-between">
         <a href="create-category-Ting.php" role="button" class="my-2 text-end btn btn-outline-secondary">新增類別</a>
@@ -221,11 +200,11 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
             排序
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>id <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
+            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>類別編號<i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
 
-            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>id <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
-            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>類別 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>類別 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
+            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>類別編號<i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
+            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>類別名稱 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+            <li><a class="dropdown-item" href="category-list-Ting.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>類別名稱 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
           </ul>
         </div>
       </div>
@@ -234,19 +213,60 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
         <table class="table table-bordered p-3">
           <thead>
             <tr>
-              <th>category_id</th>
-              <th>category_name</th>
-              <th>Edit</th>
+              <th>類別編號</th>
+              <th>類別名稱</th>
+              <th>編輯類別</th>
             </tr>
           </thead>
           <?php foreach ($resultseqrows as $name) : ?>
+            <!-- Modal-start -->
+            <div class="modal fade" id="deleteModal<?= $name["category_id"]  ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">訊息</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    確定隱藏?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <a href="doDelete-Ting.php?id=<?= $name["category_id"]  ?>" class="btn btn-danger">確定</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Moadal-end -->
+            <!-- Modal 永久刪除-start -->
+            <div class="modal fade" id="deleteUserModal<?= $name["category_id"]  ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteUserModalLabel">訊息</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    確定刪除?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <a class="btn btn-danger" href="delete-user-Ting.php?id=<?= $name["category_id"] ?>">永久刪除</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Moadal永久刪除-end -->
             <tbody>
               <tr>
                 <td><?= $name["category_id"] ?></td>
                 <td><?= $name["category_name"] ?></td>
                 <td>
                   <a href="edit-category-Ting.php?id=<?= $name["category_id"] ?>" role="button" class="btn btn-success">編輯類別</a>
-                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除類別</button>
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $name["category_id"]  ?>">隱藏類別</button>
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal<?= $name["category_id"]  ?>">刪除類別</button>
                 </td>
 
               </tr>
