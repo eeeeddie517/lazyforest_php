@@ -27,12 +27,10 @@ Midterm assignment
 歆語   整合OK
 <hr>
 
-子云   整合ING
-更新照片丟回去好像會帶brand_logo/XXXXX.jpg brand_img/XXXXX.jpg 回去資料庫導致圖片死圖
+子云   整合OK
 <hr>
 
-千僖   整合ING
-not final
+千僖   整合OK
 <hr>
 
 
