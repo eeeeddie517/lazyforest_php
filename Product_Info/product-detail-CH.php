@@ -1,5 +1,5 @@
 <?php
-require_once("../db-connect-CH.php");
+require_once("../db_connect.php");
 
 $id = $_GET["id"];
 // $sql = "SELECT * FROM product_info WHERE valid = 1 AND product_info.id = $id";
@@ -58,7 +58,7 @@ $Categories=$resultCategory->fetch_all(MYSQLI_ASSOC);
           <th>圖片</th>
           <td style=" height: 100px;" class="selected_fields" id="imageInput">
             <div id="product_img"></div>
-            <img class="object-fit-cover h-100" src="../images-CH/<?= $row["product_img"] ?> " alt="Current Image">
+            <img class="object-fit-cover h-100" src="images-CH/<?= $row["product_img"] ?> " alt="Current Image">
           </td>
           <!-- <td>
             <input type="file" name="image" class="form-control" id="imageInput">
@@ -115,7 +115,8 @@ $Categories=$resultCategory->fetch_all(MYSQLI_ASSOC);
     </table>
     <div class="d-flex justify-content-center mb-5">
       <button class="btn btn-secondary mx-3" id="edit_product">編輯商品</button>
-      <a href="product-list-CH.php" class="btn btn-dark mx-3">返回產品列表</a>
+      <button class="btn btn-success mx-3" id="save_product" type="button">儲存</button>
+      <a href="../product_list-LIN.php" class="btn btn-dark mx-3">返回產品列表</a>
     </div>
   </div>
 
@@ -256,7 +257,7 @@ $Categories=$resultCategory->fetch_all(MYSQLI_ASSOC);
 
       $.ajax({
         method: "POST",
-        url: "/small-project/product-list-CH/update-product-CH.php",
+        url: "http://localhost/lazyforest/Product_Info/update-product-CH.php",
         dataType: "json",
         data: formData,
         processData: false,

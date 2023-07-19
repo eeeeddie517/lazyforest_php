@@ -151,7 +151,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
         <div class="py-3 d-flex justify-content-between">
-            <form action="do-search-CH.php">
+            <form action="Product_Info/do-search-CH.php">
                 <div class="row">
                     <div class="col">
                         <input class="form-control" type="text" name="name" placeholder="搜尋商品">
@@ -162,19 +162,19 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             </form>
             <div class="btn-group">
-                <a href="product-list-CH.php?page=<?= $page ?>&type=1" class="btn btn-dark <?php if($type==1)echo "active";?>">
+                <a href="product_list-LIN.php?page=<?= $page ?>&type=1" class="btn btn-dark <?php if($type==1)echo "active";?>">
                 id
                     <i class="fa-solid fa-sort-up"></i>
                 </a> 
-                 <a href="product-list-CH.php?page=<?= $page ?>&type=2" class="btn btn-dark <?php if($type==2)echo "active";?>">
+                 <a href="product_list-LIN.php?page=<?= $page ?>&type=2" class="btn btn-dark <?php if($type==2)echo "active";?>">
                  id
                     <i class="fa-solid fa-sort-down"></i>
                 </a>
-                <a href="product-list-CH.php?page=<?= $page ?>&type=3" class="btn btn-dark <?php if($type==3)echo "active";?>">
+                <a href="product_list-LIN.php?page=<?= $page ?>&type=3" class="btn btn-dark <?php if($type==3)echo "active";?>">
                 價格
                     <i class="fa-solid fa-sort-up"></i>
                 </a>
-                <a href="product-list-CH.php?page=<?= $page ?>&type=4" class="btn btn-dark <?php if($type==4)echo "active";?>">
+                <a href="product_list-LIN.php?page=<?= $page ?>&type=4" class="btn btn-dark <?php if($type==4)echo "active";?>">
                 價格
                     <i class="fa-solid fa-sort-down"></i>
                 </a>
@@ -202,13 +202,13 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                         <!-- <td><?= $products["brand_id"] ?></td> -->
                         <td><?= $products["product_name"] ?></td>
                         <td style="width: 150px; height: 50px;">
-                            <img class="object-fit-cover w-100" src="../images-CH/<?= $products["product_img"] ?> " alt="">
+                            <img class="object-fit-cover w-100" src="Product_Info/images-CH/<?= $products["product_img"] ?> " alt="">
                         </td>
                         <td><?= "NT$".$products["product_price"] ?></td>
                         <td><?= $products["product_amount"] ?></td>
                         <td><?= $products["updated_at"] ?></td>
                         <td>
-                            <a href="product-detail-CH.php?id=<?= $products["id"] ?>" class="btn btn-secondary">檢視</a>
+                            <a href="Product_Info/product-detail-CH.php?id=<?= $products["id"] ?>" class="btn btn-secondary">檢視</a>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_alert" >刪除</button>
                             <div>
                                 <div class="modal" tabindex="-1" id="delete_alert">
@@ -241,7 +241,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
             <ul class="pagination justify-content-center p-5">
                 <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                     <li class="page-item <?php if ($i == $page) echo "active"; ?>">
-                        <a class="page-link" href="product-list-CH.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
+                        <a class="page-link" href="product_list-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
             </ul>

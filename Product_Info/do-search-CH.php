@@ -1,5 +1,5 @@
 <?php
-require_once("../db-connect-CH.php");
+require_once("../db_connect.php");
 
 if(isset($_GET["name"])){
     $name = $_GET["name"];
@@ -49,7 +49,7 @@ if(isset($_GET["name"])){
                 </div>
             </form>
             <div class="py-2 ">
-                <a class="btn btn-secondary" href="product-list-CH.php">回使用者列表</a>
+                <a class="btn btn-secondary" href="../product_list-LIN.php">回使用者列表</a>
                 <h6> 共<?=$productCount?> 件商品 </h6> 
             </div>
             <table class="table table-bordered">
@@ -68,7 +68,7 @@ if(isset($_GET["name"])){
                         <tr>
                             <td><?=$product["id"]?></td>
                             <td><?=$product["product_name"]?></td>
-                            <td style="width: 150px; height: 150px;"> <img class="object-fit-cover w-100" src="../images-CH/<?=$product["product_img"]?>" alt="">
+                            <td style="width: 150px; height: 150px;"> <img class="object-fit-cover w-100" src="images-CH/<?=$product["product_img"]?>" alt="">
                                 </td>
                             <td><?=$product["product_price"]?></td>
                             <td><?=$product["product_amount"]?></td>
