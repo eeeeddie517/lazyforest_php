@@ -23,6 +23,25 @@ $page = $_GET["page"] ?? 1;
 $type = $_GET["type"] ?? 1;
 
 $sqlTotal = "SELECT camp_id FROM camp_info WHERE valid=1";
+
+$sqlMemberTotal = "SELECT user_id FROM member_list WHERE valid=1";
+$resultMemberTotal = $conn->query($sqlMemberTotal);
+$totalMemberCount = $resultMemberTotal->num_rows;
+
+$sqlCampTotal = "SELECT camphost_id FROM camp_list WHERE valid=1";
+$resultCampTotal = $conn->query($sqlCampTotal);
+$totalCampCount = $resultCampTotal->num_rows;
+
+$sqlBrandTotal = "SELECT brand_id FROM brand_info WHERE valid=1";
+$resultBrandTotal = $conn->query($sqlBrandTotal);
+$totalBrandCount = $resultBrandTotal->num_rows;
+
+$sqlProductTotal = "SELECT id FROM product_info WHERE valid=1";
+$resultProductTotal = $conn->query($sqlProductTotal);
+$totalProductCount = $resultProductTotal->num_rows;
+
+
+
 $resultTotal = $conn->query($sqlTotal);
 $totalCamp = $resultTotal->num_rows;
 
@@ -242,81 +261,30 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         </nav>
 
     </aside>
+    <?php if(isset($_SESSION["admin"])) : ?>
     <main class="main-content ">
-        <!-- <div class="px-3">
-            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                <h1>營地資訊</h1>
-            </div>
-            <div class="table-responsive small ">
-                <div class="py-2 d-flex justify-content-between align-items-center">
-                    <a class="btn btn-primary mb-3" href="add_camp.php">新增</a>
-                    <div>
-                        共 <?= $totalCamp ?> 個營地, 第 <?= $page ?> 頁
-                    </div>
+        <div class="container">
+            <div class="rows d-flex ">
+                <div class="col bg-danger rounded mx-2 p-2">
+                    <h2>用戶統計</h2>
+                    <p class="text-light"><?= $totalMemberCount ?>位</p>
                 </div>
-                <div class="py-2">
-                    <div class="mx-1 py-2 d-flex justify-content-between">
-                        <form action="search.php">
-                            <div class="row gx-2">
-                                <div class="col">
-                                    <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
-                                </div>
-                                <div class="col-auto">
-                                    <button class="btn btn-primary" type="submit">搜尋</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="btn-group">
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=1">id <i class="fa-solid fa-arrow-up"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=2">id <i class="fa-solid fa-arrow-down"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=3">海拔 <i class="fa-solid fa-arrow-up"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info.php?page=<?= $page ?>&type=4">海拔 <i class="fa-solid fa-arrow-down"></i></a>
-                        </div>
-                    </div>
+                <div class="col bg-success rounded mx-2 p-2">
+                    <h2>營主統計</h2>
+                    <p class="text-light"><?= $totalCampCount ?>位</p>
                 </div>
-
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>camp_id</th>
-                            <th>營地名稱</th>
-                            <th>營地地址</th>
-                            <th>營主電話</th>
-                            <th>海拔</th>
-                            <th>詳細資訊</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($rows as $row) : ?>
-                            <tr>
-                                <td><?= $row["camp_id"] ?></td>
-                                <td><?= $row["camp_name"] ?></td>
-                                <td><?= $row["camp_address"] ?></td>
-                                <td><?= $row["camp_phone"] ?></td>
-                                <td><?= $row["camp_altitude"] ?> 公尺</td>
-                                <td>
-                                    <a class="btn btn-primary" href="camp.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
-                                    
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($i == $page) echo "active"; ?>">
-                                <a class="page-link " href="camp_info.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
-                            </li>
-                        <?php endfor; ?>
-                    </ul>
-                </nav>
+                <div class="col bg-primary rounded mx-2 p-2">
+                    <h2>品牌統計</h2>
+                    <p class="text-light"><?= $totalBrandCount  ?>家</p>
+                </div>
+                <div class="col bg-info rounded mx-2 p-2">
+                    <h2>商品統計</h2>
+                    <p class="text-light"><?= $totalProductCount ?>個</p>
+                </div>
             </div>
-        </div> -->
-
-
+        </div>
     </main>
-
+    <?php endif; ?>
 
 
 

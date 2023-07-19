@@ -52,7 +52,7 @@ if (isset($_SESSION["camp"])) {
     $sql = "SELECT camps.*, camp_info.camp_name AS camp_name, camp_info.camp_host_id AS camp_host_id
         FROM camps
         JOIN camp_info ON camps.camp_id = camp_info.camp_id
-        WHERE camps.valid = 1 AND camp_host_id = '$currentCampID'
+        WHERE camps.valid = 1 AND camp_host_id = '$currentCampID' AND camp_info.valid = 1
         $orderBy
         LIMIT $startItem, $perPage";
     $result = $conn->query($sql);
