@@ -4,16 +4,29 @@ require_once("db_connect.php");
 
 
 if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
-    echo "請依正常管道登入";
+    header("location: 404.php");
+}
+
+
+if (isset($_SESSION["admin"])) {
+    // $currentCampID = $_SESSION["camp"]["camphost_id"];
+    $sqlTotal = "SELECT camp_id FROM camp_info WHERE valid=1 ";
+    $resultTotal = $conn->query($sqlTotal);
+    $totalCamp = $resultTotal->num_rows;
+}
+
+if (isset($_SESSION["camp"])) {
+    $currentCampID = $_SESSION["camp"]["camphost_id"];
+    $sqlTotal = "SELECT camp_id FROM camp_info WHERE valid=1 AND camp_host_id = '$currentCampID'";
+    $resultTotal = $conn->query($sqlTotal);
+    $totalCamp = $resultTotal->num_rows;
 }
 
 $page = $_GET["page"] ?? 1;
 
 $type = $_GET["type"] ?? 1;
 
-$sqlTotal = "SELECT camp_id FROM camp_info WHERE valid=1";
-$resultTotal = $conn->query($sqlTotal);
-$totalCamp = $resultTotal->num_rows;
+
 
 $perPage = 5;
 $startItem = ($page - 1) * $perPage;
@@ -34,16 +47,19 @@ if ($type == 1) {
     header("location: 404.php");
 }
 
-$sql =
-"SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude
- FROM camp_info
- WHERE valid = 1
- $orderBy 
- LIMIT $startItem, $perPage
-";
-
-$result = $conn->query($sql);
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+if (isset($_SESSION["admin"])) {
+    $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1  $orderBy  LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+}
+if (isset($_SESSION["camp"])) {
+    $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1 AND camp_host_id = '$currentCampID' $orderBy  LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+}
+// $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1  $orderBy  LIMIT $startItem, $perPage";
+// $result = $conn->query($sql);
+// $rows = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!doctype html>
 <html lang="en">
@@ -92,7 +108,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
             <div class="me-3">
-                Hi, 
+                Hi,
                 <?php
                 if (isset($_SESSION["admin"])) {
                     echo $_SESSION["admin"]["name"];
@@ -112,60 +128,109 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <aside class="main-aside position-fixed bg-light vh-100 border-end">
         <nav class="">
             <ul class="list-unstyled">
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
-                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        營地資訊
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        營位預定
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        類別管理
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        會員清單
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        品牌資訊
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        商品資訊
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        營主名單
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        品牌名單
-                    </a>
-                </li>
+                <?php if (isset($_SESSION["admin"])) { ?>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                            <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營地資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營位預定
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            類別管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            會員清單
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            品牌資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            商品資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營主名單
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            品牌名單
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["camp"])) { ?>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                            <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營地資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營位預定
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["brand"])) { ?>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                            <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            類別管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            品牌資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            商品資訊
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
             <ul class="list-unstyled">
                 <hr>
@@ -229,25 +294,42 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($rows as $row) : ?>
-                            <tr>
-                                <td><?= $row["camp_id"] ?></td>
-                                <td><?= $row["camp_name"] ?></td>
-                                <td><?= $row["camp_address"] ?></td>
-                                <td><?= $row["camp_phone"] ?></td>
-                                <td><?= $row["camp_altitude"] ?> 公尺</td>
-                                <td>
-                                    <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
-                                    
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <?php if (isset($_SESSION["admin"])) : ?>
+                            <?php foreach ($rows as $row) : ?>
+                                <tr>
+                                    <td><?= $row["camp_id"] ?></td>
+                                    <td><?= $row["camp_name"] ?></td>
+                                    <td><?= $row["camp_address"] ?></td>
+                                    <td><?= $row["camp_phone"] ?></td>
+                                    <td><?= $row["camp_altitude"] ?> 公尺</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <?php if (isset($_SESSION["camp"])) : ?>
+                            <?php foreach ($rows as $row) : ?>
+                                <?php if ($row["camp_id"] == $currentCampID) : ?>
+                                    <tr>
+                                        <td><?= $row["camp_id"] ?></td>
+                                        <td><?= $row["camp_name"] ?></td>
+                                        <td><?= $row["camp_address"] ?></td>
+                                        <td><?= $row["camp_phone"] ?></td>
+                                        <td><?= $row["camp_altitude"] ?> 公尺</td>
+                                        <td>
+                                            <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($i == $page) echo "active";?>">
+                            <li class="page-item <?php if ($i == $page) echo "active"; ?>">
                                 <a class="page-link " href="camp_info-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>

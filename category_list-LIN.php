@@ -4,7 +4,7 @@ require_once("db_connect.php");
 
 
 if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
-    echo "請依正常管道登入";
+    header("location: 404.php");
 }
 
 $sql = "SELECT * FROM db";
@@ -149,6 +149,7 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
     <aside class="main-aside position-fixed bg-light vh-100 border-end">
         <nav class="">
             <ul class="list-unstyled">
+            <?php if (isset($_SESSION["admin"])) { ?>
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
@@ -203,6 +204,54 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
                         品牌名單
                     </a>
                 </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["camp"])) { ?>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營地資訊
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營位預定
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["brand"])) { ?>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        類別管理
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        品牌資訊
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        商品資訊
+                    </a>
+                </li>
+                <?php } ?>
             </ul>
             <ul class="list-unstyled">
                 <hr>

@@ -4,7 +4,7 @@ require_once("db_connect.php");
 
 
 if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
-    echo "請依正常管道登入";
+    header("location: 404.php");
 }
 
 $page = $_GET["page"] ?? 1;
@@ -20,9 +20,9 @@ $totalCamp = $resultTotal->num_rows;
 
 //排序id,name
 if ($type == 1) {
-    $ORDERBY = "ORDER BY camp_id ASC";
+    $ORDERBY = "ORDER BY camphost_id ASC";
 } elseif ($type == 2) {
-    $ORDERBY = "ORDER BY camp_id DESC";
+    $ORDERBY = "ORDER BY camphost_id DESC";
 } elseif ($type == 3) {
     $ORDERBY = "ORDER BY camp_email ASC";
 } else {
@@ -110,17 +110,13 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             <ul class="list-unstyled">
                 <!-- if ($_SESSION['user']['name'] !== 'Joe'): 
                 endif;  用session判斷哪些要讓user看到的寫法! -->
-                <?php if (!isset($_SESSION["user"])) {
-                ?>
-                <?php
-                } ?>
+                <?php if (isset($_SESSION["admin"])) { ?>
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                         Dashboard
                     </a>
                 </li>
-
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
@@ -169,6 +165,54 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         品牌名單
                     </a>
                 </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["camp"])) { ?>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營地資訊
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營位預定
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["brand"])) { ?>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        類別管理
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        品牌資訊
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        商品資訊
+                    </a>
+                </li>
+                <?php } ?>
             </ul>
             <ul class="list-unstyled">
                 <hr>
@@ -234,11 +278,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <tbody>
                     <?php foreach ($rows as $camp) : ?>
                         <tr>
-                            <td><?= $camp["camp_id"] ?></td>
+                            <td><?= $camp["camphost_id"] ?></td>
                             <td><?= $camp["camp_hostName"] ?></td>
                             <td><?= $camp["camp_email"] ?></td>
                             <td><?= $camp["camp_phone"] ?></td>
-                            <td><a class="btn btn-primary" href="CampHost_List/camp-detail-Liao.php?id=<?= $camp["camp_id"] ?>">顯示</a></td>
+                            <td><a class="btn btn-primary" href="CampHost_List/camp-detail-Liao.php?id=<?= $camp["camphost_id"] ?>">顯示</a></td>
 
                         </tr>
                     <?php endforeach; ?>

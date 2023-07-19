@@ -3,7 +3,7 @@ session_start();
 require_once("../db_connect.php");
 
 if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
-    echo "請依正常管道登入";
+    header("location: 404.php");
 }
 
 $id = $_GET["id"];
@@ -62,7 +62,7 @@ $row = $result->fetch_assoc();
         <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
         <div class="d-flex align-items-center">
             <div class="me-3">
-                Hi, 
+                Hi,
                 <?php
                 if (isset($_SESSION["admin"])) {
                     echo $_SESSION["admin"]["name"];
@@ -82,60 +82,109 @@ $row = $result->fetch_assoc();
     <aside class="main-aside position-fixed bg-light vh-100 border-end">
         <nav class="">
             <ul class="list-unstyled">
-            <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+            <?php if (isset($_SESSION["admin"])) { ?>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                         Dashboard
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camp_info-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         營地資訊
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camp_ground-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         營位預定
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../category_list-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         類別管理
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../member_list-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         會員清單
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../brand-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         品牌資訊
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../product_list-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         商品資訊
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camphost_list-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         營主名單
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../brand_list-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         品牌名單
                     </a>
                 </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["camp"])) { ?>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
+                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camp_info-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營地資訊
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camp_ground-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        營位預定
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["brand"])) { ?>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
+                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../category_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        類別管理
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../brand-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        品牌資訊
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="../product_list-LIN.php">
+                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                        商品資訊
+                    </a>
+                </li>
+                <?php } ?>
             </ul>
             <ul class="list-unstyled">
                 <hr>
@@ -155,121 +204,121 @@ $row = $result->fetch_assoc();
 
     </aside>
     <main class="main-content ">
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">訊息</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    確認刪除？
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <a href="doDelete-YU.php?id=<?= $id ?>" class="btn btn-danger">確認</a>
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">訊息</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        確認刪除？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <a href="doDelete-YU.php?id=<?= $id ?>" class="btn btn-danger">確認</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container py-3">
-        <form action="doUpdate-YU.php" method="post" enctype="multipart/form-data">
-            <table class="table table-bordered">
-                <input type="hidden" name="id" value="<?= $row["id"] ?>">
-                <tr>
-                    <th>分區</th>
-                    <td> <input type="text" class="form-control" value="<?= $row["part"] ?>" name="part"></td>
-                </tr>
-                <tr>
-                    <th>數量</th>
-                    <td><input type="text" class="form-control" value="<?= $row["amount"] ?>" name="amount"></td>
-                </tr>
-                <tr>
-                    <th>圖片</th>
-                    <td>
-                        <input type="file" name="image" class="form-control" id="imageInput">
-                        <?php if (!empty($row["image"])) : ?>
-                            <div class="mt-2">
-                                <strong>目前圖片：</strong>
-                                <div id="currentImage">
-                                    <img src="camp_img/<?= $row["image"] ?>" alt="Current Image" width="200">
+        <div class="container py-3">
+            <form action="doUpdate-YU.php" method="post" enctype="multipart/form-data">
+                <table class="table table-bordered">
+                    <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                    <tr>
+                        <th>分區</th>
+                        <td> <input type="text" class="form-control" value="<?= $row["part"] ?>" name="part"></td>
+                    </tr>
+                    <tr>
+                        <th>數量</th>
+                        <td><input type="text" class="form-control" value="<?= $row["amount"] ?>" name="amount"></td>
+                    </tr>
+                    <tr>
+                        <th>圖片</th>
+                        <td>
+                            <input type="file" name="image" class="form-control" id="imageInput">
+                            <?php if (!empty($row["image"])) : ?>
+                                <div class="mt-2">
+                                    <strong>目前圖片：</strong>
+                                    <div id="currentImage">
+                                        <img src="camp_img/<?= $row["image"] ?>" alt="Current Image" width="200">
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endif; ?>
-                        <input type="hidden" name="current_image" value="<?= $row["image"] ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <th>價錢</th>
-                    <td><input type="text" class="form-control" value="<?= $row["price"] ?>" name="price"></td>
-                </tr>
-                <tr>
-                    <th>簡介</th>
-                    <td><input type="text" class="form-control " value="<?= $row["description"] ?>" name="description"></td>
-                </tr>
-            </table>
-            <div class="py-2 d-flex justify-content-between">
-                <div>
-                    <button class="btn btn-success" type="submit">儲存</button>
-                    <a class="btn btn-secondary" href="camp-YU.php?id=<?= $row["id"] ?>">取消</a>
+                            <?php endif; ?>
+                            <input type="hidden" name="current_image" value="<?= $row["image"] ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>價錢</th>
+                        <td><input type="text" class="form-control" value="<?= $row["price"] ?>" name="price"></td>
+                    </tr>
+                    <tr>
+                        <th>簡介</th>
+                        <td><input type="text" class="form-control " value="<?= $row["description"] ?>" name="description"></td>
+                    </tr>
+                </table>
+                <div class="py-2 d-flex justify-content-between">
+                    <div>
+                        <button class="btn btn-success" type="submit">儲存</button>
+                        <a class="btn btn-secondary" href="camp-YU.php?id=<?= $row["id"] ?>">取消</a>
+                    </div>
+                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
                 </div>
-                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script>
-        // 預覽圖片
-        function previewImage() {
-            var input = document.getElementById('imageInput');
-            var preview = document.getElementById('imagePreview');
-            var file = input.files[0];
-            var reader = new FileReader();
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <script>
+            // 預覽圖片
+            function previewImage() {
+                var input = document.getElementById('imageInput');
+                var preview = document.getElementById('imagePreview');
+                var file = input.files[0];
+                var reader = new FileReader();
 
-            reader.onloadend = function() {
-                var img = document.createElement('img');
-                img.src = reader.result;
-                img.classList.add('img-fluid');
-                img.style.maxWidth = '200px'; // 設定最大寬度
-                img.style.maxHeight = '200px'; // 設定最大高度
-                preview.innerHTML = '';
-                preview.appendChild(img);
+                reader.onloadend = function() {
+                    var img = document.createElement('img');
+                    img.src = reader.result;
+                    img.classList.add('img-fluid');
+                    img.style.maxWidth = '200px'; // 設定最大寬度
+                    img.style.maxHeight = '200px'; // 設定最大高度
+                    preview.innerHTML = '';
+                    preview.appendChild(img);
+                }
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.innerHTML = '';
+                }
             }
 
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                preview.innerHTML = '';
+            // 取代目前圖片
+            function replaceCurrentImage() {
+                var input = document.getElementById('imageInput');
+                var preview = document.getElementById('currentImage');
+                var file = input.files[0];
+                var reader = new FileReader();
+
+                reader.onloadend = function() {
+                    var img = document.createElement('img');
+                    img.src = reader.result;
+                    img.classList.add('img-fluid');
+                    img.style.maxWidth = '200px'; // 設定最大寬度
+                    img.style.maxHeight = '200px'; // 設定最大高度
+                    preview.innerHTML = '';
+                    preview.appendChild(img);
+                }
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.innerHTML = '';
+                }
             }
-        }
 
-        // 取代目前圖片
-        function replaceCurrentImage() {
-            var input = document.getElementById('imageInput');
-            var preview = document.getElementById('currentImage');
-            var file = input.files[0];
-            var reader = new FileReader();
-
-            reader.onloadend = function() {
-                var img = document.createElement('img');
-                img.src = reader.result;
-                img.classList.add('img-fluid');
-                img.style.maxWidth = '200px'; // 設定最大寬度
-                img.style.maxHeight = '200px'; // 設定最大高度
-                preview.innerHTML = '';
-                preview.appendChild(img);
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                preview.innerHTML = '';
-            }
-        }
-
-        document.getElementById('imageInput').addEventListener('change', replaceCurrentImage);
-    </script>
+            document.getElementById('imageInput').addEventListener('change', replaceCurrentImage);
+        </script>
     </main>
 
 
