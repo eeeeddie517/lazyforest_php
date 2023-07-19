@@ -61,7 +61,7 @@ if ($checkNum == 0) {
 
 
     if ($conn->query($sql) === TRUE) {
-        header("location:camp-signUp-Liao.php");
+        header("location:camp-signIn-Liao.php");
         //這邊要改成前往dashboard
     } else {
         echo "新增資料錯誤: " . $conn->error;

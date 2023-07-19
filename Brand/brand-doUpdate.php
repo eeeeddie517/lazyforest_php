@@ -32,7 +32,7 @@ if (!empty($brand_img_tmp)) {
     $brand_img_path = $_POST["original_brand_img"];
 }
 
-$sql = "UPDATE brand_info SET brand_name='$brand_name', brand_intro='$brand_intro', brand_logo='$brand_logo_path', brand_img='$brand_img_path' WHERE brand_id=$brand_id";
+$sql = "UPDATE brand_info SET brand_name='$brand_name', brand_intro='$brand_intro', brand_logo='$brand_logo', brand_img='$brand_img' WHERE brand_id=$brand_id";
 
 // echo $sql;
 if ($conn->query($sql) === TRUE) {

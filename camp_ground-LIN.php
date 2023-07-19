@@ -10,9 +10,17 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
 $page = $_GET["page"] ?? 1;
 $type = $_GET["type"] ?? 1;
 
-$sqlTotal = "SELECT id FROM camps WHERE valid=1";
-$resultTotal = $conn->query($sqlTotal);
-$totalCamps = $resultTotal->num_rows;
+if (isset($_SESSION["admin"])) {
+    $sqlTotal = "SELECT id FROM camps WHERE valid=1";
+    $resultTotal = $conn->query($sqlTotal);
+    $totalCamps = $resultTotal->num_rows;    
+}
+if (isset($_SESSION["camp"])) {
+    $currentCampID = $_SESSION["camp"]["camphost_id"];
+    $sqlTotal = "SELECT id FROM camps WHERE valid=1 AND camp_id = '$currentCampID'";
+    $resultTotal = $conn->query($sqlTotal);
+    $totalCamps = $resultTotal->num_rows;    
+}
 
 $perPage = 8;
 $startItem = ($page - 1) * $perPage;
@@ -29,16 +37,37 @@ if ($type == 1) {
 } else {
     header("location:404.php");
 }
-
-$sql = "SELECT camps.*, camp_info.camp_name AS camp_name
+if (isset($_SESSION["admin"])) {
+    $sql = "SELECT camps.*, camp_info.camp_name AS camp_name
         FROM camps
         JOIN camp_info ON camps.camp_id = camp_info.camp_id
         WHERE camps.valid = 1
         $orderBy
         LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+    $campRows = $result->fetch_all(MYSQLI_ASSOC);  
+}
+if (isset($_SESSION["camp"])) {
+    $currentCampID = $_SESSION["camp"]["camphost_id"];
+    $sql = "SELECT camps.*, camp_info.camp_name AS camp_name, camp_info.camp_host_id AS camp_host_id
+        FROM camps
+        JOIN camp_info ON camps.camp_id = camp_info.camp_id
+        WHERE camps.valid = 1 AND camp_host_id = '$currentCampID'
+        $orderBy
+        LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+    $campRows = $result->fetch_all(MYSQLI_ASSOC); 
+}
 
-$result = $conn->query($sql);
-$campRows = $result->fetch_all(MYSQLI_ASSOC);
+// $sql = "SELECT camps.*, camp_info.camp_name AS camp_name
+//         FROM camps
+//         JOIN camp_info ON camps.camp_id = camp_info.camp_id
+//         WHERE camps.valid = 1
+//         $orderBy
+//         LIMIT $startItem, $perPage";
+
+// $result = $conn->query($sql);
+// $campRows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 ?>
@@ -194,12 +223,6 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                     </a>
                 </li>
                 <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        類別管理
-                    </a>
-                </li>
-                <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
                         <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                         品牌資訊
@@ -231,16 +254,27 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
 
     </aside>
     <main class="main-content ">
-        <div class="container">
+    <div class="container">
             <div class="px-3">
                 <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                     <h1>營位管理</h1>
                 </div>
-
+                <div class="d-flex justify-content-end align-items-center mb-3">
+                    共 <?= $totalCamps ?> 筆，第<?= $page ?>頁
+                </div>
                 <div class="py-2 d-flex justify-content-between">
-                    <div>
-                        共 <?= $totalCamps ?> 筆，第<?= $page ?>頁
-                    </div>
+                <?php if (isset($_SESSION["admin"])) { ?>
+                    <form action="Camp_Ground/search-YU.php">
+                        <div class="row gx-2">
+                            <div class="col">
+                                <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-success" type="submit">搜尋</button>
+                            </div>
+                        </div>
+                    </form>
+                <?php } ?>
                     <div class="dropdown">
                         <a class="btn btn-success" href="Camp_Ground/create-camp-YU.php">新增營區</a>
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -287,7 +321,15 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                         <?php endfor; ?>
                     </ul>
                 </nav>
+
             </div>
+
+
+
+            <script>
+                let camps = <?= json_encode($campRows) ?>;
+                console.log(camps);
+            </script>
     </main>
     <script>
         let camps = <?= json_encode($campRows) ?>;

@@ -1,72 +1,236 @@
 <?php
+session_start();
 require_once("../db_connect.php");
 
-if(isset($_GET["name"])){
-    $name=$_GET["name"];
+
+if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION["brand"])) {
+    header("location: 404.php");
+}
+// require_once("../db_connect.php");
+
+if (isset($_GET["name"])) {
+    $name = $_GET["name"];
     $sql = "SELECT * FROM camp_list WHERE camp_hostName LIKE '%$name%' AND valid=1";
-    $result=$conn->query($sql);
-    $rows=$result->fetch_all(MYSQLI_ASSOC);
-    $campCount=$result->num_rows;
-}else{
-    $campCount=0;
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+    $campCount = $result->num_rows;
+} else {
+    $campCount = 0;
 }
 
 ?>
-
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Do Search</title>
+    <title>森懶腰</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            height: 2000px;
+        }
 
+        :root {
+            --aside-width: 300px;
+            --page-spacing-top: 56px;
+        }
+
+        .brand-name {
+            width: var(--aside-width);
+        }
+
+        .main-aside {
+            width: var(--aside-width);
+            padding-top: calc(var(--page-spacing-top) + 10px);
+        }
+
+        .main-content {
+            margin-left: var(--aside-width);
+            padding-top: calc(var(--page-spacing-top) + 10px);
+        }
+
+        /* .chart{
+            height: 400px;
+        } */
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <form action="do-search-Liao.php">
-            <div class="row mt-3">
-                <div class="col">
-                    <input class="form-control" type="text" name="name" placeholder="搜尋營地主">
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-dark" type="submit">搜尋</button>
-                </div>
+    <header class="text-bg-dark d-flex shadow fixed-top justify-content-between align-items-center">
+        <a class="bg-black py-3 px-3 text-decoration-none link-light brand-name" href="/">森懶腰 <i class="fa-solid fa-tree" style="color: #ffffff;"></i></a>
+        <div class="d-flex align-items-center">
+            <div class="me-3">
+                Hi,
+                <?php
+                if (isset($_SESSION["admin"])) {
+                    echo $_SESSION["admin"]["name"];
+                } elseif (isset($_SESSION["camp"])) {
+                    echo $_SESSION["camp"]["camp_hostName"];
+                } elseif (isset($_SESSION["brand"])) {
+                    echo $_SESSION["brand"]["brand_hostName"];
+                }
+                ?>
             </div>
-        </form>
-        <div class="mt-3 d-flex justify-content-between align-items-center">
-            <a class="btn btn-dark mb-3" href="../camphost_list-Lin.php">回使用者列表</a>
-            <h6>共 <?= $campCount ?> 筆 </h6>
+            <a href="logout.php" class="btn btn-dark me-3">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
         </div>
-        <table class="table table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>id</th>
-                    <th>姓名</th>
-                    <th>帳號（信箱）</th>
-                    <th>電話</th>
-                    <th>詳細資訊</th>
-                </tr>
-            </thead>
+    </header>
+    <aside class="main-aside position-fixed bg-light vh-100 border-end">
+        <nav class="">
+            <ul class="list-unstyled">
+                <!-- if ($_SESSION['user']['name'] !== 'Joe'): 
+                endif;  用session判斷哪些要讓user看到的寫法! -->
+                <?php if (isset($_SESSION["admin"])) { ?>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                            <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營地資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營位預定
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            類別管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            會員清單
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            品牌資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            商品資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營主名單
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            品牌名單
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if (isset($_SESSION["camp"])) { ?>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                            <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營地資訊
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
+                            營位預定
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+            <ul class="list-unstyled">
+                <hr>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="">
+                        <i class="fa-solid fa-gear fa-fw me-2"></i>
+                        Setting
+                    </a>
+                </li>
+                <li>
+                    <a class="d-block py-2 px-3 text-decoration-none" href="">
+                        <i class="fa-solid fa-door-closed fa-fw me-2"></i>
+                        Sign out
+                    </a>
+                </li>
+        </nav>
+
+    </aside>
+    <main class="main-content ">
+    <div class="container">
+            <div class="d-flex justify-content-between align-items-center px-2">
+                <h2 class="mt-3">CampHost_List</h2>
+                <!-- <h6>共 <?= $totalCamp ?> 筆，第<?= $page ?> 頁</h6> -->
+            </div>
+        <div class="container">
+            <form action="do-search-Liao.php">
+                <div class="row mt-3">
+                    <div class="col">
+                        <input class="form-control" type="text" name="name" placeholder="搜尋營地主">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-dark" type="submit">搜尋</button>
+                    </div>
+                </div>
+            </form>
+            <div class="mt-3 d-flex justify-content-between align-items-center">
+                <a class="btn btn-dark mb-3" href="../camphost_list-Lin.php">回使用者列表</a>
+                <h6>共 <?= $campCount ?> 筆 </h6>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>姓名</th>
+                        <th>帳號（信箱）</th>
+                        <th>電話</th>
+                        <th>詳細資訊</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <?php foreach ($rows as $camp) : ?>
-                    <tr>
-                        <td><?= $camp["camp_id"] ?></td>
-                        <td><?= $camp["camp_hostName"] ?></td>
-                        <td><?= $camp["camp_email"] ?></td>
-                        <td><?= $camp["camp_phone"] ?></td>
-                        <td><a class="btn btn-primary" href="camp-detail-Liao.php?id=<?= $camp["camp_id"] ?>">顯示</a></td>
+                        <tr>
+                            <td><?= $camp["camphost_id"] ?></td>
+                            <td><?= $camp["camp_hostName"] ?></td>
+                            <td><?= $camp["camp_email"] ?></td>
+                            <td><?= $camp["camp_phone"] ?></td>
+                            <td><a class="btn btn-primary" href="camp-detail-Liao.php?id=<?= $camp["camphost_id"] ?>">顯示</a></td>
 
-                    </tr>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
-        </table>
+            </table>
+        </div>
     </div>
+    </main>
+
 
 
 

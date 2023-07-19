@@ -21,4 +21,5 @@ if (isset($_SESSION["admin"])) {
     unset($_SESSION["admin"]);
     header("location: admin/sign-in.php");
     }
-// header("location: Member/member-signIn-Liao.php");
+
+// 待解決:session 同時存在兩個以上  按登出會全部登出

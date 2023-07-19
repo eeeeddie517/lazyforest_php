@@ -12,16 +12,6 @@ $page = $_GET["page"] ?? 1;
 
 $type = $_GET["type"] ?? 2;
 
-$sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1";
-$resultTotal = $conn->query($sqlTotal);
-$totalBrand = $resultTotal->num_rows;
-
-$perPage = 5;
-$startItem = ($page - 1) * $perPage;
-
-//計算總頁數，有餘數的話就需要再新增一頁 -> 無條件進位得出所需頁數
-$totalPage = ceil($totalBrand / $perPage);
-
 if ($type == 1) {
     $orderBY = "ORDER BY brand_id ASC";
 } elseif ($type == 2) {
@@ -34,12 +24,50 @@ if ($type == 1) {
     header("location: ../404.php");
 }
 
-$sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE valid = 1 $orderBY LIMIT $startItem, $perPage";
+
+$perPage = 5;
+$startItem = ($page - 1) * $perPage;
+
+
+if (isset($_SESSION["admin"])) {
+    $sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1";
+    $resultTotal = $conn->query($sqlTotal);
+    $totalBrand = $resultTotal->num_rows;
+}
+
+if (isset($_SESSION["brand"])) {
+    $currentBrandID = $_SESSION["brand"]["brand_id"];
+    $sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1 AND brand_id = '$currentBrandID'";
+    $resultTotal = $conn->query($sqlTotal);
+    $totalBrand = $resultTotal->num_rows;
+}
+
+// $sqlTotal = "SELECT brand_id FROM brand_info WHERE valid = 1";
+// $resultTotal = $conn->query($sqlTotal);
+// $totalBrand = $resultTotal->num_rows;
 
 
 
 
-$result = $conn->query($sql);
+
+// $sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE valid = 1 $orderBY LIMIT $startItem, $perPage";
+if (isset($_SESSION["admin"])) {
+    $sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE valid = 1 $orderBY LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+
+}
+
+if (isset($_SESSION["brand"])) {
+    $currentBrandID = $_SESSION["brand"]["brand_id"];
+    $sql = "SELECT brand_id, brand_name, brand_intro, brand_logo FROM brand_info WHERE valid = 1 AND brand_id = '$currentBrandID' $orderBY LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+
+}
+
+//計算總頁數，有餘數的話就需要再新增一頁 -> 無條件進位得出所需頁數
+$totalPage = ceil($totalBrand / $perPage);
+
+// $result = $conn->query($sql);
 
 ?>
 <!doctype html>
@@ -170,38 +198,11 @@ $result = $conn->query($sql);
                     </a>
                 </li>
                 <?php } ?>
-                <?php if (isset($_SESSION["camp"])) { ?>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
-                        <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
-                        Dashboard
-                    </a>
-                </li>
-
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        營地資訊
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        營位預定
-                    </a>
-                </li>
-                <?php } ?>
                 <?php if (isset($_SESSION["brand"])) { ?>
                 <li>
                     <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
                         <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                         Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
-                        <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                        類別管理
                     </a>
                 </li>
                 <li>

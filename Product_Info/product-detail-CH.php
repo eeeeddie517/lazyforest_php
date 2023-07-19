@@ -1,11 +1,21 @@
 <?php
-require_once("../db_connect.php");
+require_once("../db-connect-CH.php");
 
 $id = $_GET["id"];
-$sql = "SELECT * FROM product_info WHERE valid = 1 AND product_info.id = $id";
+// $sql = "SELECT * FROM product_info WHERE valid = 1 AND product_info.id = $id";
+
+
+
+$sql = "SELECT product_info.* ,db.category_name AS category_name FROM product_info JOIN db ON product_info.category_id = db.category_id WHERE product_info.valid=1 AND product_info.id = $id";
 
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+
+$sqlCategory="SELECT * FROM db";
+$resultCategory=$conn->query($sqlCategory);
+$Categories=$resultCategory->fetch_all(MYSQLI_ASSOC);
+
+
 
 ?>
 <!doctype html>
@@ -46,14 +56,30 @@ $row = $result->fetch_assoc();
         </tr>
         <tr>
           <th>圖片</th>
-          <td style=" height: 100px;" class="selected_fields">
+          <td style=" height: 100px;" class="selected_fields" id="imageInput">
             <div id="product_img"></div>
-            <img class="object-fit-cover h-100" src="images-CH/<?= $row["product_img"] ?> " alt="">
+            <img class="object-fit-cover h-100" src="../images-CH/<?= $row["product_img"] ?> " alt="Current Image">
           </td>
+          <!-- <td>
+            <input type="file" name="image" class="form-control" id="imageInput">
+            <?php if (!empty($row["product_image"])) : ?>
+              <div class="mt-2">
+                <strong>目前圖片：</strong>
+                <div id="currentImage">
+                  <img src="../images-CH/<?= $row["product_img"] ?>" alt="Current Image" height="100">
+                </div>
+              </div>
+            <?php endif; ?>
+            <input type="hidden" name="current_image" value="<?= $row["product_image"] ?>">
+          </td> -->
         </tr>
         <tr>
           <th>商品名稱</th>
           <td class="selected_fields" id="product_name"><?= $row["product_name"] ?></td>
+        </tr>
+        <tr>
+          <th>商品類別</th>
+          <td class="selected_fields" id="product_category"><?= $row["category_name"] ?></td>
         </tr>
         <tr>
           <th>商品介紹</th>
@@ -72,6 +98,8 @@ $row = $result->fetch_assoc();
           <td class="selected_fields" id="product_amount"><?= $row["product_amount"] ?></td>
         </tr>
         <tr>
+        </tr>
+        <tr>
           <th>商品編號</th>
           <td><?= $row["product_serial"] ?></td>
         </tr>
@@ -87,8 +115,7 @@ $row = $result->fetch_assoc();
     </table>
     <div class="d-flex justify-content-center mb-5">
       <button class="btn btn-secondary mx-3" id="edit_product">編輯商品</button>
-      <button class="btn btn-success mx-3" id="save_product">儲存</button>
-      <a href="../product_list-LIN.php" class="btn btn-dark mx-3">返回產品列表</a>
+      <a href="product-list-CH.php" class="btn btn-dark mx-3">返回產品列表</a>
     </div>
   </div>
 
@@ -96,6 +123,7 @@ $row = $result->fetch_assoc();
     let edit_product = document.getElementById("edit_product")
     let save_product = document.getElementById("save_product")
     var product_name_orig = document.getElementById("product_name")
+    var product_category_orig = document.getElementById("product_category")
     var product_introduce_orig = document.getElementById("product_introduce")
     var product_spec_orig = document.getElementById("product_spec")
     var product_price_orig = document.getElementById("product_price")
@@ -105,18 +133,73 @@ $row = $result->fetch_assoc();
     // 抓到可以被修改的東東
     edit_product.addEventListener("click", function() {
 
-      product_name_orig.innerHTML = `<input placeholder="${product_name_orig.innerText}" class="form-control" type="text" id="input_product_name" value="">`;
-      product_introduce_orig.innerHTML = `<textarea class="form-control" type="text" id="input_product_introduce" rows="4"></textarea>`;
-      product_spec_orig.innerHTML = `<input placeholder="${product_spec_orig.innerText}" class="form-control" type="text" id="input_product_spec" value="">`;
-      product_price_orig.innerHTML = `<input placeholder="${product_price_orig.innerText}" class="form-control" type="text" id="input_product_price" value="">`;
-      product_amount_orig.innerHTML = `<input placeholder="${product_amount_orig.innerText}" class="form-control" type="text" id="input_product_amount" value="">`;
+      product_name_orig.innerHTML = `<input class="form-control" type="text" id="input_product_name" value="${product_name_orig.innerText}">`;
+      
+      product_category_orig.innerHTML = `<select id="input_product_category"  class="form-select"><?php foreach($Categories as $category): ?> <option value="<?= $category["category_id"] ?>"><?= $category["category_name"] ?> </option> <?php endforeach; ?> </select> `;
+
+
+      product_introduce_orig.innerHTML = `<textarea class="form-control" type="text" id="input_product_introduce" rows="4">${product_introduce_orig.innerText}</textarea>`;
+      product_spec_orig.innerHTML = `<input class="form-control" type="text" id="input_product_spec" value="${product_spec_orig.innerText}">`;
+      product_price_orig.innerHTML = `<input class="form-control" type="text" id="input_product_price" value="${product_price_orig.innerText}">`;
+      product_amount_orig.innerHTML = `<input class="form-control" type="text" id="input_product_amount" value="${product_amount_orig.innerText}">`;
       product_img_orig.innerHTML = `<input class="form-control" type="file" id="input_product_img" value="">`
     })
+
+    // 預覽圖片
+    // function previewImage() {
+    //   var input = document.getElementById('imageInput');
+    //   var preview = document.getElementById('imagePreview');
+    //   var file = input.files[0];
+    //   var reader = new FileReader();
+
+    //   reader.onloadend = function() {
+    //     var img = document.createElement('img');
+    //     img.src = reader.result;
+    //     img.classList.add('img-fluid');
+    //     //img.style.maxWidth = '200px'; // 設定最大寬度
+    //     img.style.maxHeight = '200px'; // 設定最大高度
+    //     preview.innerHTML = '';
+    //     preview.appendChild(img);
+    //   }
+
+    //   if (file) {
+    //     reader.readAsDataURL(file);
+    //   } else {
+    //     preview.innerHTML = '';
+    //   }
+    // }
+    // 取代目前圖片
+    // function replaceproduct_img() {
+    //   var input = document.getElementById('imageInput');
+    //   var preview = document.getElementById('product_img');
+    //   var file = input.files[0];
+    //   var reader = new FileReader();
+
+    //   reader.onloadend = function() {
+    //     var img = document.createElement('img');
+    //     img.src = reader.result;
+    //     img.classList.add('img-fluid');
+    //     //img.style.maxWidth = '200px'; // 設定最大寬度
+    //     img.style.maxHeight = '100px'; // 設定最大高度
+    //     preview.innerHTML = '';
+    //     preview.appendChild(img);
+    //   }
+
+    //   if (file) {
+    //     reader.readAsDataURL(file);
+    //   } else {
+    //     preview.innerHTML = '';
+    //   }
+    // }
+
+    // document.getElementById('imageInput').addEventListener('change', replaceproduct_img);
+
 
     //存取
     save_product.addEventListener("click", function() {
 
       let input_product_name = document.getElementById("input_product_name")
+      let input_product_category = document.getElementById("input_product_category")
       let input_product_introduce = document.getElementById("input_product_introduce")
       let input_product_img = document.getElementById("input_product_img")
       let input_product_spec = document.getElementById("input_product_spec")
@@ -131,6 +214,13 @@ $row = $result->fetch_assoc();
         formData.append("input_product_name", input_product_name.value);
       } else {
         formData.append("input_product_name", input_product_name.value);
+      }
+      if (input_product_category.value === "") {
+        input_product_category.value = product_category_orig.innerText;
+        formData.append("input_product_category", input_product_category.value);
+      } else {
+        console.log(input_product_category.value);
+        formData.append("input_product_category", input_product_category.value);
       }
 
       if (input_product_introduce.value === "") {
@@ -163,9 +253,10 @@ $row = $result->fetch_assoc();
 
       formData.append("id", <?= $id ?>);
 
+
       $.ajax({
         method: "POST",
-        url: "http://localhost/lazyforest/Product_Info/update-product-CH.php",
+        url: "/small-project/product-list-CH/update-product-CH.php",
         dataType: "json",
         data: formData,
         processData: false,
@@ -174,7 +265,7 @@ $row = $result->fetch_assoc();
           console.log(response)
           alert("修改資料完成, 商品編號: " + response.id);
 
-          location.reload(true); // 從服務器強制重新加載當前頁面
+          location.reload(true); // 服務器強制重新加載當前頁面
 
         },
         error: function(jqXHR, textStatus, errorThrown) {

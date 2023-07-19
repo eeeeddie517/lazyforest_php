@@ -101,24 +101,25 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <!-- <div class="d-flex p-3 ">
-                                <label for="">商品編號</label>
-                                <input class="ms-3" type="text" id="product_id">
-                            </div> -->
-                            <!-- <div class="d-flex p-3">
-                                <label for="">品牌名稱</label>
-                                <input class="ms-3" type="text" id="brand_id">
-                            </div> -->
                             <div class="d-flex p-3 justify-content-between align-items-center">
                                 <label for="">商品名稱</label>
                                 <input class="ms-4 form-control" type="text" id="product_name" style="width: 330px;">
                             </div>
-                            <div class="d-flex p-3 justify-content-between">
+                            <div class="d-flex p-3 justify-content-between align-items-center">
+                                <label for="">商品類別</label>
+                                <select class="form-select" style="width: 330px;" id="product_category"> 
+                                    <option value="1">帳篷</option>
+                                    <option value="2">睡袋</option>
+                                    <option value="3">折疊桌</option>
+                                    <option value="4">折疊椅</option>
+                                    <option value="5">料理用具</option>
+                                    <option value="6">露營燈</option>
+                                    <option value="7">實用小物</option>
+                                </select>
+                            </div>
+                            <div class="d-flex p-3 justify-content-between align-items-center">
                                 <label for="">商品介紹</label>
-                                <div class="form-floating">
-                                    <textarea type="text" class="form-control" id="product_introduce" style="height: 150px; width: 330px;">
-                                    </textarea>
-                                </div>
+                                <textarea class="form-control" id="product_introduce" style="width: 330px;"></textarea>
                             </div>
                             <div class="d-flex p-3 justify-content-between align-items-center">
                                 <label for="">商品規格</label>
@@ -126,7 +127,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                             </div>
                             <div class="d-flex p-3 justify-content-between align-items-center">
                                 <label for="">售價</label>
-                                <input class="ms-5 form-control" type="text" id="product_price" style="width: 330px;">
+                                <input class="ms-5 form-control" type="number" id="product_price" style="width: 330px;">
                             </div>
                             <div class="d-flex p-3 justify-content-between align-items-center">
                                 <label for="">數量</label>
@@ -149,7 +150,17 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             </div>
         </div>
-        <div class="py-3 d-flex justify-content-end">
+        <div class="py-3 d-flex justify-content-between">
+            <form action="do-search-CH.php">
+                <div class="row">
+                    <div class="col">
+                        <input class="form-control" type="text" name="name" placeholder="搜尋商品">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-dark" type="submit">搜尋</button>
+                    </div>
+                </div>
+            </form>
             <div class="btn-group">
                 <a href="product-list-CH.php?page=<?= $page ?>&type=1" class="btn btn-dark <?php if($type==1)echo "active";?>">
                 id
@@ -241,6 +252,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
         // 新增
         let add_product = document.getElementById("add-product")
         let product_name = document.getElementById("product_name")
+        let product_category = document.getElementById("product_category")
         let product_introduce = document.getElementById("product_introduce")
         let product_spec = document.getElementById("product_spec")
         let product_price = document.getElementById("product_price")
@@ -253,6 +265,7 @@ $ProductRows = $result->fetch_all(MYSQLI_ASSOC);
             let formData = new FormData();
             formData.append("product_img", product_img.files[0]);
             formData.append("product_name", product_name.value);
+            formData.append("product_category", product_category.value);
             formData.append("product_introduce", product_introduce.value);
             formData.append("product_spec", product_spec.value);
             formData.append("product_price", product_price.value);

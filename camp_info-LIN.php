@@ -7,6 +7,36 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
     header("location: 404.php");
 }
 
+$page = $_GET["page"] ?? 1;
+
+$type = $_GET["type"] ?? 1;
+
+if ($type == 1) {
+    $orderBy = "ORDER BY camp_id ASC";
+} elseif ($type == 2) {
+    $orderBy = "ORDER BY camp_id DESC";
+} elseif ($type == 3) {
+    $orderBy = "ORDER BY camp_altitude ASC";
+} elseif ($type == 4) {
+    $orderBy = "ORDER BY camp_altitude DESC";
+} else {
+    header("location: 404.php");
+}
+
+$perPage = 5;
+$startItem = ($page - 1) * $perPage;
+
+if (isset($_SESSION["admin"])) {
+    $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1  $orderBy  LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+}
+if (isset($_SESSION["camp"])) {
+    $currentCampID = $_SESSION["camp"]["camphost_id"];
+    $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1 AND camp_host_id = '$currentCampID' $orderBy  LIMIT $startItem, $perPage";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+}
 
 if (isset($_SESSION["admin"])) {
     // $currentCampID = $_SESSION["camp"]["camphost_id"];
@@ -22,41 +52,10 @@ if (isset($_SESSION["camp"])) {
     $totalCamp = $resultTotal->num_rows;
 }
 
-$page = $_GET["page"] ?? 1;
-
-$type = $_GET["type"] ?? 1;
-
-
-
-$perPage = 5;
-$startItem = ($page - 1) * $perPage;
 
 //計算總共頁數
 //無條件進位
 $totalPage = ceil($totalCamp / $perPage);
-
-if ($type == 1) {
-    $orderBy = "ORDER BY camp_id ASC";
-} elseif ($type == 2) {
-    $orderBy = "ORDER BY camp_id DESC";
-} elseif ($type == 3) {
-    $orderBy = "ORDER BY camp_altitude ASC";
-} elseif ($type == 4) {
-    $orderBy = "ORDER BY camp_altitude DESC";
-} else {
-    header("location: 404.php");
-}
-
-if (isset($_SESSION["admin"])) {
-    $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1  $orderBy  LIMIT $startItem, $perPage";
-    $result = $conn->query($sql);
-    $rows = $result->fetch_all(MYSQLI_ASSOC);
-}
-if (isset($_SESSION["camp"])) {
-    $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1 AND camp_host_id = '$currentCampID' $orderBy  LIMIT $startItem, $perPage";
-    $result = $conn->query($sql);
-    $rows = $result->fetch_all(MYSQLI_ASSOC);
-}
 // $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE valid = 1  $orderBy  LIMIT $startItem, $perPage";
 // $result = $conn->query($sql);
 // $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -213,12 +212,6 @@ if (isset($_SESSION["camp"])) {
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
-                            <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
-                            類別管理
-                        </a>
-                    </li>
-                    <li>
                         <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌資訊
@@ -294,36 +287,18 @@ if (isset($_SESSION["camp"])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (isset($_SESSION["admin"])) : ?>
-                            <?php foreach ($rows as $row) : ?>
-                                <tr>
-                                    <td><?= $row["camp_id"] ?></td>
-                                    <td><?= $row["camp_name"] ?></td>
-                                    <td><?= $row["camp_address"] ?></td>
-                                    <td><?= $row["camp_phone"] ?></td>
-                                    <td><?= $row["camp_altitude"] ?> 公尺</td>
-                                    <td>
-                                        <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                        <?php if (isset($_SESSION["camp"])) : ?>
-                            <?php foreach ($rows as $row) : ?>
-                                <?php if ($row["camp_id"] == $currentCampID) : ?>
-                                    <tr>
-                                        <td><?= $row["camp_id"] ?></td>
-                                        <td><?= $row["camp_name"] ?></td>
-                                        <td><?= $row["camp_address"] ?></td>
-                                        <td><?= $row["camp_phone"] ?></td>
-                                        <td><?= $row["camp_altitude"] ?> 公尺</td>
-                                        <td>
-                                            <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                        <?php foreach ($rows as $row) : ?>
+                            <tr>
+                                <td><?= $row["camp_id"] ?></td>
+                                <td><?= $row["camp_name"] ?></td>
+                                <td><?= $row["camp_address"] ?></td>
+                                <td><?= $row["camp_phone"] ?></td>
+                                <td><?= $row["camp_altitude"] ?> 公尺</td>
+                                <td>
+                                    <a class="btn btn-primary" href="Camp_Info/camp-LIN.php?camp_id=<?= $row["camp_id"] ?>">顯示</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation example">
