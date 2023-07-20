@@ -73,7 +73,7 @@ $row = $result->fetch_assoc();
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>

@@ -39,6 +39,7 @@ if (isset($_GET["brand_name"])) {
     <style>
         body {
             height: 2000px;
+            background: #ffffff;
         }
 
         :root {
@@ -86,7 +87,7 @@ if (isset($_GET["brand_name"])) {
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
@@ -203,7 +204,7 @@ if (isset($_GET["brand_name"])) {
                     <div class="col">
                         <input type="text" class="form-control" placeholder="搜尋商家" name="brand_name">
                     </div>
-                    <div class="col-auto"><button class="btn btn-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <div class="col-auto"><button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
             </form>
@@ -218,7 +219,7 @@ if (isset($_GET["brand_name"])) {
         </div>
         <?php if ($brand_count != 0) : ?>
             <table class="table table-bordered">
-                <thead>
+                <thead class="table-dark">
                     <tr>
                         <th class="col-0 ">id</th>
                         <th class="col-2">logo</th>

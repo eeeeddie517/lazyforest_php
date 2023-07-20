@@ -26,6 +26,7 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
     <style>
         body {
             height: 2000px;
+            background: #ffffff;
         }
 
         :root {
@@ -69,7 +70,7 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>

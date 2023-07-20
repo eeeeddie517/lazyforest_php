@@ -183,10 +183,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
         </nav>
 
     </aside>
-    <main class="main-content ">
-        <div class="px-3">
+    <main class="main-content">
+        <div class="container px-3">
             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                <h1>Member List</h1>
+                <h1 class="mt-3">會員名單</h1>
                 <h6>共 <?= $totalMember ?> 筆，第<?= $page ?> 頁</h6>
             </div>
             <div class="m-3 d-flex justify-content-between">
@@ -197,19 +197,19 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             <input class="form-control" type="text" name="name" placeholder="搜尋使用者">
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-dark" type="submit">搜尋</button>
+                            <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
                 </form>
                 <!-- 搜尋按鈕 -->
                 <div class="search-btn">
                     <div class="btn-group me-2">
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=1" class="btn btn-light"><i class="fa-solid fa-arrow-down"></i> id</a>
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=2" class="btn btn-light"><i class="fa-solid fa-arrow-up"></i> id</a>
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=1" class="btn btn-secondary"><i class="fa-solid fa-arrow-down"></i> id</a>
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=2" class="btn btn-secondary"><i class="fa-solid fa-arrow-up"></i> id</a>
                     </div>
                     <div class="btn-group">
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=3" class="btn btn-light"><i class="fa-solid fa-arrow-down"></i> name</a>
-                        <a href="member_list-LIN.php?page=<?= $page ?>&type=4" class="btn btn-light"><i class="fa-solid fa-arrow-up"></i> name</a>
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=3" class="btn btn-secondary"><i class="fa-solid fa-arrow-down"></i> name</a>
+                        <a href="member_list-LIN.php?page=<?= $page ?>&type=4" class="btn btn-secondary"><i class="fa-solid fa-arrow-up"></i> name</a>
                     </div>
                 </div>
 

@@ -108,7 +108,7 @@ if (isset($name)) {
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
@@ -119,55 +119,55 @@ if (isset($name)) {
             <ul class="list-unstyled">
                 <?php if (isset($_SESSION["admin"])) { ?>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
                             <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_info-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營地資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_ground-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營位預定
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../category_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             類別管理
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../member_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             會員清單
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../product_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             商品資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camphost_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營主名單
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌名單
                         </a>
@@ -223,13 +223,34 @@ if (isset($name)) {
                 </tr>
             </thead> -->
                         <?php foreach ($rows as $name) : ?>
+                            <!-- Modal 永久刪除-start -->
+                            <div class="modal fade" id="deleteUserModal<?= $name["category_id"]  ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="deleteUserModalLabel">訊息</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            確定刪除?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                            <a class="btn btn-danger" href="delete-user-Ting.php?id=<?= $name["category_id"] ?>">永久刪除</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Moadal永久刪除-end -->
                             <tbody>
                                 <tr>
                                     <td><?= $name["category_id"] ?></td>
                                     <td><?= $name["category_name"] ?></td>
                                     <td>
                                         <a href="edit-category-Ting.php?id=<?= $name["category_id"] ?>" role="button" class="btn btn-success">編輯類別</a>
-                                        <button class="btn btn-danger">刪除類別</button>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal<?= $name["category_id"]  ?>">刪除類別</button>
+                                        
                                     </td>
 
                                 </tr>

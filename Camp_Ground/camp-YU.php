@@ -8,7 +8,7 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
 
 $id = $_GET["id"];
 
-require_once("../db_connect.php");
+// require_once("../db_connect.php");
 $sql = "SELECT * FROM camps WHERE id=$id ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -74,7 +74,7 @@ $row = $result->fetch_assoc();
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>

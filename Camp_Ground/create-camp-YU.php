@@ -6,6 +6,13 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
     header("location: 404.php");
 }
 
+$campHost_id=$_SESSION["camp"]["camphost_id"];
+
+$sql="SELECT * FROM camp_info WHERE camp_host_id='$campHost_id'";
+$result=$conn->query($sql);
+$rows=$result->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -65,7 +72,7 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
@@ -203,7 +210,11 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
             <form action="doCreate-YU.php" method="post" enctype="multipart/form-data">
                 <div class="mb-2">
                     <label for="">營地名稱</label>
-                    <input type="text" class="form-control" name="camp_name">
+                    <select name="camp_name" id="" class="form-select">
+                        <?php foreach($rows as $camp): ?>
+                        <option value="<?=$camp["camp_id"]?>"><?=$camp["camp_name"]?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="mb-2">
                     <label for="">分區</label>

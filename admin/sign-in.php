@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION["admin"])){
+if (isset($_SESSION["admin"])) {
     header("location: ../camp_home-LIN.php");
 }
 
@@ -23,30 +23,37 @@ if(isset($_SESSION["admin"])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <style>
         body {
-            background: url("/images/deserted-beach-travel-1920x720.jpg") center center/cover;
+            position: relative;
         }
+        .container{
+            
+            background: url("https://cdn.dribbble.com/users/17243/screenshots/11643378/media/09c00588d9a7cef3dedd09b528c6de9f.png?compress=1&resize=1600x1200&vertical=center") right center/cover;
+        }
+
 
         .sign-in-panel {
             width: 320px;
             /* background-color: aquamarine; */
+            background:url("");
         }
 
-        .logo {
-            height: 100px;
-        }
+
 
         .input-area .form-floating:first-child .form-control {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
             border-bottom: 0;
         }
+
         .input-area .form-floating:last-child .form-control {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
+
         .input-area .form-control:focus {
             z-index: 1;
         }
+
         .form-floating>label {
             z-index: 5;
         }
@@ -54,45 +61,49 @@ if(isset($_SESSION["admin"])){
 </head>
 
 <body>
-    <div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
         <div class="sign-in-panel text-center">
-            <img class="logo" src="/images/Tripadvisor-Logo.png" alt="">
+            <!-- <div class="logo">
+                <img class="object-fit-contain" src="https://cdn.dribbble.com/users/17243/screenshots/11643378/media/09c00588d9a7cef3dedd09b528c6de9f.png?compress=1&resize=1600x1200&vertical=center" alt="">
+            </div> -->
+
             <h1 class="text-center text-white">Please Sign in</h1>
             <?php
-                if(isset($_SESSION["error"]["times"]) && $_SESSION["error"]["times"]>=5):
+            if (isset($_SESSION["error"]["times"]) && $_SESSION["error"]["times"] >= 5) :
             ?>
                 <h2>
                     錯誤次數太多, 請稍後再登入
                 </h2>
-            <?php else: ?>
-            <form action="doLogin.php" method="post">
-                <div class="input-area">
-                    <div class="form-floating">
-                        <input type="text" class="form-control position-relative" id="floatingInput" placeholder="" name="name">
-                        <label for="floatingInput">Account</label>
+            <?php else : ?>
+                <form action="doLogin.php" method="post">
+                    <div class="input-area">
+                        <div class="form-floating">
+                            <input type="text" class="form-control position-relative" id="floatingInput" placeholder="" name="name">
+                            <label for="floatingInput">Account</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control position-relative" id="floatingPassword" placeholder="Password" name="password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
                     </div>
-                    <div class="form-floating">
-                        <input type="password" class="form-control position-relative" id="floatingPassword" placeholder="Password" name="password">
-                        <label for="floatingPassword">Password</label>
+                    <?php if (isset($_SESSION["error"]["message"])) : ?>
+                        <div class=" mt-1 p-2 text-light bg-danger rounded">
+                            <?= $_SESSION["error"]["message"] ?>
+                        </div>
+                    <?php unset($_SESSION["error"]["message"]);
+                    endif; ?>
+                    <div class="d-flex justify-content-center">
+                        <div class="form-check m-2">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Remember Me
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <?php if(isset($_SESSION["error"]["message"])): ?>
-                <div class=" mt-1 p-2 text-light bg-danger rounded">
-                    <?= $_SESSION ["error"]["message"]?>
-                </div>
-                <?php unset($_SESSION["error"]["message"]); endif; ?>
-                <div class="d-flex justify-content-center">
-                    <div class="form-check m-2">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Remember Me
-                        </label>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit">Sign in</button>
                     </div>
-                </div>
-                <div class="d-grid">
-                    <button class="btn btn-primary" type="submit">Sign in</button>
-                </div>
-            </form>
+                </form>
             <?php endif; ?>
             <div class="mt-4 text-secondary">
                 &copy; 2017-2023

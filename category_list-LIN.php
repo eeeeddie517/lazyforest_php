@@ -224,75 +224,117 @@ $resultseqrows = $resultseq->fetch_all(MYSQLI_ASSOC);
 
     </aside>
     <main class="main-content ">
-        <div class="px-3">
+    <div class="px-3">
 
-            <div class="d-flex justify-content-between align-items-center my-2">
+<div class="d-flex justify-content-between align-items-center my-2">
 
-                <form action="Category/search-Ting.php">
-                    <div class="d-flex px-2">
-                        <input type="text" class="col-6 form-control" placeholder="搜尋類別" name="name">
-                        <button class="btn btn-info col-3 mx-1" type="submit">搜尋</button>
-                    </div>
-                </form>
+  <form action="Category/search-Ting.php">
+    <div class="d-flex px-2">
+      <input type="text" class="col-6 form-control" placeholder="搜尋類別" name="name">
+      <button class="btn btn-info col-3 mx-1" type="submit">搜尋</button>
+    </div>
+
+  </form>
+  <a href="Category/hidden-Ting.php" class="btn btn-warning  mx-3">已隱藏清單</a>
+</div>
+<div class="d-flex align-items-end justify-content-between">
+  <a href="Category/create-category-Ting.php" role="button" class="my-2 text-end btn btn-outline-secondary">新增類別</a>
+
+  <div class="p-3 d-flex justify-content-end">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      排序
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="Category_list-LIN.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>類別編號<i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
+
+      <li><a class="dropdown-item" href="Category_list-LIN.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>類別編號<i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
+      <li><a class="dropdown-item" href="Category_list-LIN.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>類別名稱 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+      <li><a class="dropdown-item" href="Category_list-LIN.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>類別名稱 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
+    </ul>
+  </div>
+</div>
+<div class="chart">
+
+  <table class="table table-bordered p-3">
+    <thead>
+      <tr>
+        <th>類別編號</th>
+        <th>類別名稱</th>
+        <th>編輯類別</th>
+      </tr>
+    </thead>
+    <?php foreach ($resultseqrows as $name) : ?>
+      <!-- Modal-start -->
+      <div class="modal fade" id="deleteModal<?= $name["category_id"]  ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="deleteModalLabel">訊息</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              確定隱藏?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+              <a href="Category/doDelete-Ting.php?id=<?= $name["category_id"]  ?>" class="btn btn-danger">確定</a>
 
             </div>
-            <div class="d-flex align-items-end justify-content-between">
-                <a href="Category/create-category-Ting.php" role="button" class="my-2 text-end btn btn-outline-secondary">新增類別</a>
-
-                <div class="p-3 d-flex justify-content-end">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        排序
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="category_list-LIN.php?page=<?= $page ?>&type=1"><?php if ($type == 1) echo ""; ?>id <i class="fa-solid fa-arrow-down-short-wide"></i></a></li>
-
-                        <li><a class="dropdown-item" href="category_list-LIN.php?page=<?= $page ?>&type=2"><?php if ($type == 2) echo ""; ?>id <i class="fa-solid fa-arrow-down-wide-short"></i></a></li>
-                        <li><a class="dropdown-item" href="category_list-LIN.php?page=<?= $page ?>&type=3"> <?php if ($type == 3) echo ""; ?>類別 <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                        <li><a class="dropdown-item" href="category_list-LIN.php?page=<?= $page ?>&type=4"><?php if ($type == 4) echo ""; ?>類別 <i class="fa-solid fa-arrow-down-z-a"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="chart">
-
-                <table class="table table-bordered p-3">
-                    <thead>
-                        <tr>
-                            <th>category_id</th>
-                            <th>category_name</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <?php foreach ($resultseqrows as $name) : ?>
-                        <tbody>
-                            <tr>
-                                <td><?= $name["category_id"] ?></td>
-                                <td><?= $name["category_name"] ?></td>
-                                <td>
-                                    <a href="Category/edit-category-Ting.php?id=<?= $name["category_id"] ?>" role="button" class="btn btn-success">編輯類別</a>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除類別</button>
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    <?php endforeach ?>
-
-                </table>
-                <?php $resultCount = $resultTotal->num_rows ?>
-                <div class="d-flex">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <?php for ($i = 1; $i <= $tatalPage; $i++) : ?>
-                                <li class="page-item <?php if ($i == $page) echo "active" ?>"><a class="page-link " href="category_list-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
-                            <?php endfor; ?>
-                        </ul>
-                    </nav>
-                    <div class="text-end p-3">
-                        共有<?= $resultCount ?>筆資料
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
+      </div>
+      <!-- Moadal-end -->
+      <!-- Modal 永久刪除-start -->
+      <div class="modal fade" id="deleteUserModal<?= $name["category_id"]  ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="deleteUserModalLabel">訊息</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              確定刪除?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+              <a class="btn btn-danger" href="Category/delete-user-Ting.php?id=<?= $name["category_id"] ?>">永久刪除</a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Moadal永久刪除-end -->
+      <tbody>
+        <tr>
+          <td><?= $name["category_id"] ?></td>
+          <td><?= $name["category_name"] ?></td>
+          <td>
+            <a href="Category/edit-category-Ting.php?id=<?= $name["category_id"] ?>" role="button" class="btn btn-success">編輯類別</a>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $name["category_id"]  ?>">隱藏類別</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal<?= $name["category_id"]  ?>">刪除類別</button>
+          </td>
+
+        </tr>
+      </tbody>
+    <?php endforeach ?>
+
+  </table>
+  <?php $resultCount = $resultTotal->num_rows ?>
+  <div class="d-flex">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <?php for ($i = 1; $i <= $tatalPage; $i++) : ?>
+          <li class="page-item <?php if ($i == $page) echo "active" ?>"><a class="page-link " href="Category_list-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a></li>
+        <?php endfor; ?>
+      </ul>
+    </nav>
+    <div class="text-end p-3">
+      共有<?= $resultCount ?>筆資料
+    </div>
+  </div>
+</div>
+
+</div>
     </main>
 
 

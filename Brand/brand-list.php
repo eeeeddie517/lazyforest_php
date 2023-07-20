@@ -56,6 +56,12 @@ $result = $conn->query($sql);
     <!-- CSS -->
     <link rel="stylesheet" href="../all.css">
 
+    <style>
+        body {
+            background: #ffffff;
+        }
+    </style>
+
 </head>
 
 <body>

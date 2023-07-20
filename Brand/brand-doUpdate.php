@@ -20,7 +20,7 @@ if (!empty($brand_logo_tmp)) {
     $brand_logo_path = $brand_logo_folder.$brand_logo;
 } else {
    
-    $brand_logo_path = $_POST["original_brand_logo"];
+    $brand_logo = $_POST["original_brand_logo"];
 }
 
 
@@ -29,7 +29,7 @@ if (!empty($brand_img_tmp)) {
     $brand_img_path = $brand_img_folder.$brand_img;
 } else {
    
-    $brand_img_path = $_POST["original_brand_img"];
+    $brand_img = $_POST["original_brand_img"];
 }
 
 $sql = "UPDATE brand_info SET brand_name='$brand_name', brand_intro='$brand_intro', brand_logo='$brand_logo', brand_img='$brand_img' WHERE brand_id=$brand_id";

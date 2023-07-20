@@ -249,7 +249,7 @@ $totalPage = ceil($totalCamp / $perPage);
             </div>
             <div class="table-responsive small ">
                 <div class="py-2 d-flex justify-content-between align-items-center">
-                    <a class="btn btn-primary mb-3" href="Camp_Info/add_camp-LIN.php">新增</a>
+                    <a class="btn btn-dark mb-3" href="Camp_Info/add_camp-LIN.php">新增</a>
                     <div>
                         共 <?= $totalCamp ?> 個營地, 第 <?= $page ?> 頁
                     </div>
@@ -262,21 +262,21 @@ $totalPage = ceil($totalCamp / $perPage);
                                     <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
                                 </div>
                                 <div class="col-auto">
-                                    <button class="btn btn-primary" type="submit">搜尋</button>
+                                    <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                                 </div>
                             </div>
                         </form>
                         <div class="btn-group">
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=1">id <i class="fa-solid fa-arrow-up"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=2">id <i class="fa-solid fa-arrow-down"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=3">海拔 <i class="fa-solid fa-arrow-up"></i></a>
-                            <a class="btn btn-primary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=4">海拔 <i class="fa-solid fa-arrow-down"></i></a>
+                            <a class="btn btn-secondary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=1">id <i class="fa-solid fa-arrow-up"></i></a>
+                            <a class="btn btn-secondary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=2">id <i class="fa-solid fa-arrow-down"></i></a>
+                            <a class="btn btn-secondary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=3">海拔 <i class="fa-solid fa-arrow-up"></i></a>
+                            <a class="btn btn-secondary <?php if ($type == 1) echo "active"; ?>" href="camp_info-LIN.php?page=<?= $page ?>&type=4">海拔 <i class="fa-solid fa-arrow-down"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>camp_id</th>
                             <th>營地名稱</th>
@@ -301,15 +301,19 @@ $totalPage = ceil($totalCamp / $perPage);
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($i == $page) echo "active"; ?>">
-                                <a class="page-link " href="camp_info-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
-                            </li>
-                        <?php endfor; ?>
-                    </ul>
-                </nav>
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example ">
+                        <ul class="pagination">
+                            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                                <li class="page-item <?php if ($i == $page) echo "active"; ?>">
+                                    <a class="page-link " href="camp_info-LIN.php?page=<?= $i ?>&type=<?= $type ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                        </ul>
+                    </nav>
+                </div>
+
+
             </div>
         </div>
 

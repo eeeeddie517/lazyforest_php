@@ -262,24 +262,24 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
     </aside>
     <?php if(isset($_SESSION["admin"])) : ?>
-    <main class="main-content ">
+    <main class="main-content">
         <div class="container">
-            <div class="rows d-flex ">
-                <div class="col bg-danger rounded mx-2 p-2">
-                    <h2>用戶統計</h2>
-                    <p class="text-light"><?= $totalMemberCount ?>位</p>
+            <div class="rows d-flex mt-3">
+                <div class="col bg-primary rounded mx-2 p-3">
+                    <h2 class="text-light fw-bolder">用戶統計</h2>
+                    <p class="h5 text-light"><?= $totalMemberCount ?>位</p>
                 </div>
-                <div class="col bg-success rounded mx-2 p-2">
-                    <h2>營主統計</h2>
-                    <p class="text-light"><?= $totalCampCount ?>位</p>
+                <div class="col bg-primary rounded mx-2 p-3">
+                    <h2 class="text-light fw-bolder">營主統計</h2>
+                    <p class="h5 text-light"><?= $totalCampCount ?>位</p>
                 </div>
-                <div class="col bg-primary rounded mx-2 p-2">
-                    <h2>品牌統計</h2>
-                    <p class="text-light"><?= $totalBrandCount  ?>家</p>
+                <div class="col bg-primary rounded mx-2 p-3">
+                    <h2 class="text-light fw-bolder">品牌統計</h2>
+                    <p class="h5 text-light"><?= $totalBrandCount  ?>家</p>
                 </div>
-                <div class="col bg-info rounded mx-2 p-2">
-                    <h2>商品統計</h2>
-                    <p class="text-light"><?= $totalProductCount ?>個</p>
+                <div class="col bg-primary rounded mx-2 p-3">
+                    <h2 class="text-light fw-bolder">商品統計</h2>
+                    <p class="h5 text-light"><?= $totalProductCount ?>個</p>
                 </div>
             </div>
         </div>

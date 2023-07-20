@@ -206,8 +206,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     </aside>
     <main class="main-content ">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center px-2">
-                <h2 class="mt-3">Brand_List</h2>
+            <div class="d-flex justify-content-between align-items-center border-bottom px-2">
+                <h1 class="mt-3">品牌名單</h1>
                 <h6>共 <?= $totalBrand ?> 筆，第<?= $page ?> 頁</h6>
             </div>
 
@@ -219,19 +219,19 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             <input class="form-control" type="text" name="name" placeholder="搜尋品牌">
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-dark" type="submit">搜尋</button>
+                            <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
                 </form>
                 <!-- 搜尋按鈕 -->
                 <div class="search-btn">
                     <div class="btn-group me-2">
-                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=1" class="btn btn-light <?php if ($type == 1) echo "active"; ?> "><i class="fa-solid fa-arrow-down"></i> id</a>
-                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=2" class="btn btn-light <?php if ($type == 2) echo "active"; ?>"><i class="fa-solid fa-arrow-up"></i> id</a>
+                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=1" class="btn btn-secondary <?php if ($type == 1) echo "active"; ?> "><i class="fa-solid fa-arrow-down"></i> id</a>
+                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=2" class="btn btn-secondary <?php if ($type == 2) echo "active"; ?>"><i class="fa-solid fa-arrow-up"></i> id</a>
                     </div>
                     <div class="btn-group">
-                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=3" class="btn btn-light <?php if ($type == 3) echo "active"; ?>"><i class="fa-solid fa-arrow-down"></i> email</a>
-                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=4" class="btn btn-light <?php if ($type == 4) echo "active"; ?>"><i class="fa-solid fa-arrow-up"></i> email</a>
+                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=3" class="btn btn-secondary <?php if ($type == 3) echo "active"; ?>"><i class="fa-solid fa-arrow-down"></i> email</a>
+                        <a href="<?= $_SERVER['PHP_SELF'] ?>?page=<?= $page ?>&type=4" class="btn btn-secondary <?php if ($type == 4) echo "active"; ?>"><i class="fa-solid fa-arrow-up"></i> email</a>
                     </div>
                 </div>
 

@@ -88,6 +88,7 @@ $totalPage = ceil($totalBrand / $perPage);
     <style>
         body {
             height: 2000px;
+            background: #ffffff;
         }
 
         :root {
@@ -245,7 +246,7 @@ $totalPage = ceil($totalBrand / $perPage);
                         <div class="col">
                             <input type="text" class="form-control" placeholder="搜尋商家" name="brand_name">
                         </div>
-                        <div class="col-auto"><button class="btn btn-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <div class="col-auto"><button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
                 </form>
@@ -272,7 +273,7 @@ $totalPage = ceil($totalBrand / $perPage);
             // exit;
             ?>
             <table class="table table-bordered">
-                <thead>
+                <thead class="table-dark">
                     <tr>
                         <th class="col-0 ">id</th>
                         <th class="col-2">logo</th>

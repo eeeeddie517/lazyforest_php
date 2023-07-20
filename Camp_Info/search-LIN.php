@@ -9,11 +9,19 @@ if (!isset($_SESSION["admin"]) && !isset($_SESSION["camp"]) && !isset($_SESSION[
 if (isset($_GET["camp_name"])) {
     $camp_name = $_GET["camp_name"];
     // require_once("../db_connect.php");
-
+    if(isset($_SESSION["camp"])){
+    $currentCampID = $_SESSION["camp"]["camphost_id"];
+    $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE camp_name LIKE '%$camp_name%' AND valid=1 AND camp_host_id = '$currentCampID'";
+    $result = $conn->query($sql);
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+    $camp_count = $result->num_rows;
+    }elseif(isset($_SESSION["admin"])){
     $sql = "SELECT camp_id, camp_name, camp_address, camp_phone, camp_altitude FROM camp_info WHERE camp_name LIKE '%$camp_name%' AND valid=1 ";
     $result = $conn->query($sql);
     $rows = $result->fetch_all(MYSQLI_ASSOC);
     $camp_count = $result->num_rows;
+    }
+    
 } else {
     $camp_count = 0;
 }
@@ -77,7 +85,7 @@ if (isset($_GET["camp_name"])) {
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
@@ -88,55 +96,55 @@ if (isset($_GET["camp_name"])) {
             <ul class="list-unstyled">
                 <?php if (isset($_SESSION["admin"])) { ?>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
                             <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_info-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營地資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_ground-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營位預定
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../category_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             類別管理
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../member_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             會員清單
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../product_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             商品資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camphost_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營主名單
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌名單
                         </a>
@@ -144,20 +152,20 @@ if (isset($_GET["camp_name"])) {
                 <?php } ?>
                 <?php if (isset($_SESSION["camp"])) { ?>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
                             <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                             Dashboard
                         </a>
                     </li>
 
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_info-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營地資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_ground-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營位預定
                         </a>
@@ -165,19 +173,19 @@ if (isset($_GET["camp_name"])) {
                 <?php } ?>
                 <?php if (isset($_SESSION["brand"])) { ?>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
                             <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../product_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             商品資訊
                         </a>
@@ -232,7 +240,7 @@ if (isset($_GET["camp_name"])) {
             </div>
             <?php if ($camp_count != 0) : ?>
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>camp_id</th>
                             <th>營地名稱</th>

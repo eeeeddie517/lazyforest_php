@@ -49,7 +49,7 @@ if ($checkNum == 0) {
 
 
     if ($conn->query($sql) === TRUE) {
-        header("location:index-Liao.php");
+        header("location: member-signIn-Liao.php");
     } else {
         echo "新增資錯誤: " . $conn->error;
     }

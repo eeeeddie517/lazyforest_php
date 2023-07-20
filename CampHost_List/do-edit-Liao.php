@@ -11,7 +11,7 @@ $vat=$_POST["vat"];
 $now=date('Y-m-d H:i:s');
 
 
-$sql="UPDATE camp_list SET camp_hostName='$name',camp_email='$account',camp_phone='$phone',camp_vat='$vat' WHERE camp_id=$id";
+$sql="UPDATE camp_list SET camp_hostName='$name',camp_email='$account',camp_phone='$phone',camp_vat='$vat' WHERE camphost_id=$id";
 
 // var_dump($sql);
 

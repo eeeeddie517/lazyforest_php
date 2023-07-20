@@ -17,7 +17,13 @@ if (isset($_SESSION["admin"])) {
 }
 if (isset($_SESSION["camp"])) {
     $currentCampID = $_SESSION["camp"]["camphost_id"];
-    $sqlTotal = "SELECT id FROM camps WHERE valid=1 AND camp_id = '$currentCampID'";
+    // $sqlTotal = "SELECT id FROM camps WHERE valid=1 AND camp_id = '$currentCampID'";
+    $sqlTotal =
+    "SELECT *
+     FROM camp_info
+     INNER JOIN camps ON camp_info.camp_id = camps.camp_id
+     WHERE camp_info.camp_host_id = '$currentCampID'
+    ";
     $resultTotal = $conn->query($sqlTotal);
     $totalCamps = $resultTotal->num_rows;    
 }
@@ -105,6 +111,11 @@ if (isset($_SESSION["camp"])) {
         .main-content {
             margin-left: var(--aside-width);
             padding-top: calc(var(--page-spacing-top) + 10px);
+        }
+        .object-fit-cover{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* .chart{
@@ -270,13 +281,13 @@ if (isset($_SESSION["camp"])) {
                                 <input type="text" class="form-control" placeholder="搜尋營地名稱" name="camp_name">
                             </div>
                             <div class="col-auto">
-                                <button class="btn btn-success" type="submit">搜尋</button>
+                                <button class="btn btn-dark" type="submit">搜尋</button>
                             </div>
                         </div>
                     </form>
                 <?php } ?>
                     <div class="dropdown">
-                        <a class="btn btn-success" href="Camp_Ground/create-camp-YU.php">新增營區</a>
+                        <a class="btn btn-dark" href="Camp_Ground/create-camp-YU.php">新增營區</a>
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             排序
                         </button>

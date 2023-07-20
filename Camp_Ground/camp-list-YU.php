@@ -262,7 +262,7 @@ $campRows = $result->fetch_all(MYSQLI_ASSOC);
                                     <h3 class="h6"><?= $camps["part"] ?></h3>
                                     <div class="price text-end h5 text-success">$<?= $camps["price"] ?></div>
                                     <div class="d-grid py-2">
-                                        <a href="Camp_Ground/camp-YU.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</a>
+                                        <a href="camp-YU.php?id=<?= $camps['id'] ?>" class="btn btn-secondary">更新資料</a>
                                     </div>
                                     <div class="d-grid"></div>
                                 </div>

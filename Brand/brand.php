@@ -85,7 +85,7 @@ $original_brand_img = $row["brand_img"];
                 }
                 ?>
             </div>
-            <a href="logout.php" class="btn btn-dark me-3">
+            <a href="../logout.php" class="btn btn-dark me-3">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
@@ -98,55 +98,55 @@ $original_brand_img = $row["brand_img"];
                 endif;  用session判斷哪些要讓user看到的寫法! -->
                 <?php if (isset($_SESSION["admin"])) { ?>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
                             <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_info-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_info-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營地資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_ground-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_ground-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營位預定
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="category_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../category_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             類別管理
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="member_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../member_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             會員清單
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../product_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             商品資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camphost_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camphost_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             營主名單
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌名單
                         </a>
@@ -154,19 +154,19 @@ $original_brand_img = $row["brand_img"];
                 <?php } ?>
                 <?php if (isset($_SESSION["brand"])) { ?>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="camp_home-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../camp_home-LIN.php">
                             <i class="fa-solid fa-house-chimney fa-fw me-2"></i>
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="brand-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../brand-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             品牌資訊
                         </a>
                     </li>
                     <li>
-                        <a class="d-block py-2 px-3 text-decoration-none" href="product_list-LIN.php">
+                        <a class="d-block py-2 px-3 text-decoration-none" href="../product_list-LIN.php">
                             <i class="fa-solid fa-clipboard-list fa-fw me-2"></i></i>
                             商品資訊
                         </a>

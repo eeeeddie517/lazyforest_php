@@ -61,7 +61,7 @@ session_start();
 					</div>
 					<div class="form-group mb-2">
 						<label for="password" class="form-label">密碼</label>
-						<input name="password" type="password" class="form-control" id="password" placeholder="請自行設定密碼">
+						<input name="password" type="password" class="form-control" id="password" placeholder="請輸入密碼">
 					</div>
 					<?php if (isset($_SESSION["error"])&& isset($_SESSION["error"]["message"])) : ?>
 						<div class="text-danger">
